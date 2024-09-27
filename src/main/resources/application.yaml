@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: schedule_manager_be
+  datasource:
+    url: "jdbc:mysql://localhost:3306/fts"
+    username: root
+    password: Songlong123
+    driverClassName: "com.mysql.cj.jdbc.Driver"
+
+server:
+  servlet:
+    context-path: /schedule-manage
+  port: 6969
+
+jwt:
+  signerKey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCHx6BjBvlTzrlsEXbAP5iFbZpW
+fS+SlFZ1NircU3r+xs+Ta/gNsDfBdTZ6jiI8wSl76CNlmm8ivUpTwS0F5n6A0mSi
+TYJ4P9ja2yGSpVjFK1uguCX+bYTYgrjnxdHVZ+LjmxWWBiJY0K5VF8qXjzMW5KTE
+MOT9jK7rQ51D4RfFZwIDAQAB"
+
