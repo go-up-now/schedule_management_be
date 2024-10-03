@@ -25,6 +25,7 @@ public class Subject {
     String name;
     String credits;
     String description;
+    Double cost;
     Boolean status;
     LocalDateTime createdAt;
     String createdBy;
@@ -35,9 +36,9 @@ public class Subject {
     @JoinColumn(name = "required")
     Subject requiredSubject;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_group_id")
-    Subject_Group subject_group;
+//    @ManyToOne(fetch = FetchType.LAZY)
+//    @JoinColumn(name = "subject_group_id")
+//    Subject_Group subject_group;
 
     @ManyToMany
     Set<Specialization> specializations;

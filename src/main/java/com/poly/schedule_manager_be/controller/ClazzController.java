@@ -61,6 +61,14 @@ public class ClazzController {
                 .build();
     }
 
+    @GetMapping("/subject/{id}")
+    ApiResponse<List<ClazzNotStudentResponseDTO>> getAllClazzBySubjectId(@PathVariable Integer id){
+        return ApiResponse.<List<ClazzNotStudentResponseDTO>>builder()
+                .message("Lấy danh sách lớp theo môn học thành công")
+                .data(clazzService.getAllClazzBySubjectId(id))
+                .build();
+    }
+
     @PostMapping("/{classID}/{studentID}")
     ApiResponse<?> delete(@PathVariable Integer classID, @PathVariable Integer studentID){
         clazzService.registryToClazz(classID, studentID);

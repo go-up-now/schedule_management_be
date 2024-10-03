@@ -85,6 +85,13 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
+    public List<ClazzNotStudentResponseDTO> getAllClazzBySubjectId(Integer subjectId) {
+        Subject subject = subjectRepository.findById(subjectId).orElseThrow(()->
+                new AppException(ErrorCode.SUBJECT_NOT_EXISTED));
+        return clazzRepository.findAllBySubject(subject).stream().map(clazzMapper::toClazzNotStudentResponse).toList();
+    }
+
+    @Override
     public void registryToClazz(Integer classID, Integer studentID) {
         Clazz clazz = clazzRepository.findById(classID).orElseThrow(()->
                 new AppException(ErrorCode.CLAZZ_NOT_EXISTED));

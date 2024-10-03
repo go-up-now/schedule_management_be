@@ -16,6 +16,7 @@ public interface ClazzService {
     void delete(Integer id);
     ClazzResponseDTO getOne(Integer id);
     List<ClazzNotStudentResponseDTO> getAll();
+    List<ClazzNotStudentResponseDTO> getAllClazzBySubjectId(Integer subjectId);
     void registryToClazz(Integer classID, Integer studentID);
     long countByStudentsInClazz(Clazz clazz);
 }

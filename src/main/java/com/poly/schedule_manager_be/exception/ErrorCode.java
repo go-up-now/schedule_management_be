@@ -1,10 +1,7 @@
 package com.poly.schedule_manager_be.exception;
 
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -28,7 +25,7 @@ public enum ErrorCode {
     ROOM_NOT_EXISTED(503, "Phòng học này không tồn tại", HttpStatus.NOT_FOUND),
     CLAZZ_NOT_EXISTED(504, "Lớp học này không tồn tại", HttpStatus.NOT_FOUND),
     FULL_CLAZZ(505, "Lớp học này đã đủ sinh viên, vui lòng chọn lớp khác", HttpStatus.BAD_REQUEST),
-    PASSWORD_UNAUTHENTICATED(506, "Tài khoản hoặc mật khẩu không đúng", HttpStatus.UNAUTHORIZED),
+    PASSWORD_UNAUTHENTICATED(506, "Tài khoản hoặc mật khẩu không chính xác", HttpStatus.UNAUTHORIZED),
     UNAUTHENTICATED(507, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     STUDENT_EXIST_IN_CLAZZ(508, "Bạn đã đăng ký lớp học này rồi", HttpStatus.BAD_REQUEST),
     NOT_STUDENT(406, "Bạn không phải là sinh viên", HttpStatus.NOT_FOUND),
