@@ -16,6 +16,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setPassword(passwordEncoder.encode(requestDTO.getPassword()));
 
         HashSet<Role> roles = new HashSet<>();
-        roleRepository.findByCode(RoleConstant.ADMIN_ROLE).ifPresent(roles::add);
+        roleRepository.findById(RoleConstant.ADMIN_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
 
@@ -75,5 +76,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserResponseDTO> getAll() {
         return userRepository.findAll().stream().map(userMapper::toUserResponse).toList();
+    }
+
+    @Override
+    public UserResponseDTO getMyInfor() {
+        var context = SecurityContextHolder.getContext();
+        var email = context.getAuthentication().getName();
+        User user = userRepository.findByEmail(email).orElseThrow(()->
+                new AppException(ErrorCode.USER_NOT_EXISTED));
+        return userMapper.toUserResponse(user);
     }
 }

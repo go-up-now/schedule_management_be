@@ -30,8 +30,8 @@ public class ClazzResponseDTO {
     Integer subjectID;
     Integer instructorID;
     Integer shiftID;
-    Integer roomID;
-    List<StudentResponseDTO> students;
+    String room;
+    List<Student> students;
     LocalDateTime createdAt;
     String createdBy;
     LocalDateTime updatedAt;

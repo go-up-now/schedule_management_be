@@ -1,11 +1,8 @@
 package com.poly.schedule_manager_be.dto.response;
 
-import com.poly.schedule_manager_be.dto.request.UserCreateRequestDTO;
 import com.poly.schedule_manager_be.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDate;
 
 @Setter
 @Getter
@@ -13,11 +10,10 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class StudentResponseDTO {
-    Integer id;
-    LocalDate enterSchool;
+public class InstructorResponse {
     String semester;
+    String experience;
     Integer year;
-    String education_program;
-    UserResponseDTO user;
+    User user;
+    String specialization;
 }

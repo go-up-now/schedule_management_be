@@ -2,7 +2,6 @@ package com.poly.schedule_manager_be.controller;
 
 import com.poly.schedule_manager_be.dto.request.ClazzRequestDTO;
 import com.poly.schedule_manager_be.dto.response.ApiResponse;
-import com.poly.schedule_manager_be.dto.response.ClazzNotStudentResponseDTO;
 import com.poly.schedule_manager_be.dto.response.ClazzResponseDTO;
 import com.poly.schedule_manager_be.service.ClazzService;
 import jakarta.validation.Valid;
@@ -46,8 +45,8 @@ public class ClazzController {
     }
 
     @GetMapping
-    ApiResponse<List<ClazzNotStudentResponseDTO>> getAll(){
-        return ApiResponse.<List<ClazzNotStudentResponseDTO>>builder()
+    ApiResponse<List<ClazzResponseDTO>> getAll(){
+        return ApiResponse.<List<ClazzResponseDTO>>builder()
                 .message("Lấy danh sách lớp học thành công")
                 .data(clazzService.getAll())
                 .build();
@@ -61,16 +60,16 @@ public class ClazzController {
                 .build();
     }
 
-    @GetMapping("/subject/{id}")
-    ApiResponse<List<ClazzNotStudentResponseDTO>> getAllClazzBySubjectId(@PathVariable Integer id){
-        return ApiResponse.<List<ClazzNotStudentResponseDTO>>builder()
+    @GetMapping("/subject/{subjectId}")
+    ApiResponse<List<ClazzResponseDTO>> getAllClazzBySubjectId(@PathVariable Integer subjectId){
+        return ApiResponse.<List<ClazzResponseDTO>>builder()
                 .message("Lấy danh sách lớp theo môn học thành công")
-                .data(clazzService.getAllClazzBySubjectId(id))
+                .data(clazzService.getAllClazzBySubjectId(subjectId))
                 .build();
     }
 
     @PostMapping("/{classID}/{studentID}")
-    ApiResponse<?> delete(@PathVariable Integer classID, @PathVariable Integer studentID){
+    ApiResponse<?> clazzRegistration(@PathVariable Integer classID, @PathVariable Integer studentID){
         clazzService.registryToClazz(classID, studentID);
         return ApiResponse.builder()
                 .message("Đăng ký lớp học thành công")

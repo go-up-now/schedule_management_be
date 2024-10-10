@@ -2,6 +2,8 @@ package com.poly.schedule_manager_be.service;
 
 import com.poly.schedule_manager_be.dto.request.SubjectRequest;
 import com.poly.schedule_manager_be.dto.response.SubjectResponse;
+import com.poly.schedule_manager_be.entity.Student;
+import com.poly.schedule_manager_be.entity.Subject;
 import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
@@ -13,5 +15,7 @@ public interface SubjectService {
     void delete(Integer id);
     SubjectResponse getOne(Integer id);
     List<SubjectResponse> getAll();
-    List<SubjectResponse> findSubjectBySemesterAndYear(String semester, int year);
+    List<SubjectResponse> findSubjectBySemesterAndYear(String semester, int year, int studentId);
+    List<SubjectResponse> findRegisteredSubjectBySemesterAndYear(String semester, int year, int studentId);
+    boolean checkSubjectExisted(Subject subject, Student student);
 }

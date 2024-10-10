@@ -4,10 +4,7 @@ import com.poly.schedule_manager_be.constant.RoleConstant;
 import com.poly.schedule_manager_be.dto.request.StudentCreateRequestDTO;
 import com.poly.schedule_manager_be.dto.request.StudentUpdateRequestDTO;
 import com.poly.schedule_manager_be.dto.response.StudentResponseDTO;
-import com.poly.schedule_manager_be.entity.Clazz;
-import com.poly.schedule_manager_be.entity.Role;
-import com.poly.schedule_manager_be.entity.Student;
-import com.poly.schedule_manager_be.entity.User;
+import com.poly.schedule_manager_be.entity.*;
 import com.poly.schedule_manager_be.exception.AppException;
 import com.poly.schedule_manager_be.exception.ErrorCode;
 import com.poly.schedule_manager_be.mapper.StudentMapper;
@@ -53,7 +50,7 @@ public class StudentServiceImpl implements StudentService {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
         HashSet<Role> roles = new HashSet<>();
-        roleRepository.findByCode(RoleConstant.STUDENT_ROLE).ifPresent(roles::add);
+        roleRepository.findById(RoleConstant.STUDENT_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
         userRepository.save(user);
@@ -97,7 +94,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO getMyInfor() {
+    public StudentResponseDTO getStudentMyInfor() {
         var context = SecurityContextHolder.getContext();
         var email = context.getAuthentication().getName();
         User user = userRepository.findByEmail(email).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
@@ -125,6 +122,23 @@ public class StudentServiceImpl implements StudentService {
         });
 
         clazz.setStudents(studentList);
+        clazzRepository.save(clazz);
+    }
+
+    @Override
+    public void cancelRegisteredClazz(int clazzId) {
+        var context = SecurityContextHolder.getContext();
+        var email = context.getAuthentication().getName();
+        User user = userRepository.findByEmail(email).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
+        Student student = studentRepository.findByUser(user).orElseThrow(()-> new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+
+        Clazz clazz = clazzRepository.findById(clazzId).orElseThrow(()->
+                new AppException(ErrorCode.CLAZZ_NOT_EXISTED));
+
+//        student.getClazzes().remove(clazz);
+        clazz.getStudents().remove(student);
+
+        studentRepository.save(student);
         clazzRepository.save(clazz);
     }
 }

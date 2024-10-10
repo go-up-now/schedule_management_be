@@ -15,6 +15,7 @@ public interface StudentService {
     void delete(Integer id);
     StudentResponseDTO getOne(Integer id);
     List<StudentResponseDTO> getAll();
-    StudentResponseDTO getMyInfor();
+    StudentResponseDTO getStudentMyInfor();
     void registerInClazz(Integer clazzId);
+    void cancelRegisteredClazz(int clazzId);
 }

@@ -66,7 +66,7 @@ public class StudentController {
     ApiResponse<StudentResponseDTO> getMyInfor(){
         return ApiResponse.<StudentResponseDTO>builder()
                 .message("Lấy thông tin cá nhân của sinh viên thành công")
-                .data(studentService.getMyInfor())
+                .data(studentService.getStudentMyInfor())
                 .build();
     }
 
@@ -75,6 +75,14 @@ public class StudentController {
         studentService.registerInClazz(clazzId);
         return ApiResponse.<StudentResponseDTO>builder()
                 .message("Đăng ký lớp học thành công")
+                .build();
+    }
+
+    @DeleteMapping("/cancel/{clazzId}")
+    ApiResponse<?> cancelRegisteredClazz(@PathVariable Integer clazzId){
+        studentService.cancelRegisteredClazz(clazzId);
+        return ApiResponse.<StudentResponseDTO>builder()
+                .message("Hủy môn học thành công")
                 .build();
     }
 }

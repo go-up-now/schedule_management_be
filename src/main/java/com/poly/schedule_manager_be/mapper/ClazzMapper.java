@@ -1,13 +1,8 @@
 package com.poly.schedule_manager_be.mapper;
 
 import com.poly.schedule_manager_be.dto.request.ClazzRequestDTO;
-import com.poly.schedule_manager_be.dto.request.StudentCreateRequestDTO;
-import com.poly.schedule_manager_be.dto.request.StudentUpdateRequestDTO;
-import com.poly.schedule_manager_be.dto.response.ClazzNotStudentResponseDTO;
 import com.poly.schedule_manager_be.dto.response.ClazzResponseDTO;
-import com.poly.schedule_manager_be.dto.response.StudentResponseDTO;
 import com.poly.schedule_manager_be.entity.Clazz;
-import com.poly.schedule_manager_be.entity.Student;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -19,13 +14,14 @@ public interface ClazzMapper {
     @Mapping(target = "instructorID", source = "instructor.id")
     @Mapping(target = "subjectID", source = "subject.id")
     @Mapping(target = "shiftID", source = "shift.id")
-    @Mapping(target = "roomID", source = "room.id")
+    @Mapping(target = "room", source = "room.room")
     ClazzResponseDTO toClazzResponse(Clazz clazz);
 
     @Mapping(target = "instructorID", source = "instructor.id")
     @Mapping(target = "subjectID", source = "subject.id")
     @Mapping(target = "shiftID", source = "shift.id")
-    @Mapping(target = "roomID", source = "room.id")
-    ClazzNotStudentResponseDTO toClazzNotStudentResponse(Clazz clazz);
+    @Mapping(target = "room", source = "room.room")
+    @Mapping(target = "students", ignore = true)
+    ClazzResponseDTO toClazzNotStudentResponse(Clazz clazz);
     void updateClazz(@MappingTarget Clazz clazz, ClazzRequestDTO request);
 }

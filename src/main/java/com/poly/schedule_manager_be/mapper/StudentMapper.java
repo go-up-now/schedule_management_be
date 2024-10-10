@@ -10,9 +10,12 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface StudentMapper {
+    @Mapping(target = "education_program", ignore = true)
     Student toStudent(StudentCreateRequestDTO request);
+    @Mapping(target = "education_program", source = "education_program.code")
     StudentResponseDTO toStudentResponse(Student student);
 
     @Mapping(target = "user.roles", ignore = true)
+    @Mapping(target = "education_program", ignore = true)
     void updateStudent(@MappingTarget Student student, StudentUpdateRequestDTO request);
 }

@@ -1,9 +1,7 @@
 package com.poly.schedule_manager_be.service.impl;
 
 import com.poly.schedule_manager_be.dto.request.ClazzRequestDTO;
-import com.poly.schedule_manager_be.dto.response.ClazzNotStudentResponseDTO;
 import com.poly.schedule_manager_be.dto.response.ClazzResponseDTO;
-import com.poly.schedule_manager_be.dto.response.StudentResponseDTO;
 import com.poly.schedule_manager_be.entity.*;
 import com.poly.schedule_manager_be.exception.AppException;
 import com.poly.schedule_manager_be.exception.ErrorCode;
@@ -80,15 +78,16 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public List<ClazzNotStudentResponseDTO> getAll() {
-        return clazzRepository.findAll().stream().map(clazzMapper::toClazzNotStudentResponse).toList();
+    public List<ClazzResponseDTO> getAll() {
+        return clazzRepository.findAll().stream().map(clazzMapper::toClazzResponse).toList();
     }
 
     @Override
-    public List<ClazzNotStudentResponseDTO> getAllClazzBySubjectId(Integer subjectId) {
+    public List<ClazzResponseDTO> getAllClazzBySubjectId(Integer subjectId) {
         Subject subject = subjectRepository.findById(subjectId).orElseThrow(()->
                 new AppException(ErrorCode.SUBJECT_NOT_EXISTED));
-        return clazzRepository.findAllBySubject(subject).stream().map(clazzMapper::toClazzNotStudentResponse).toList();
+
+        return clazzRepository.findAllBySubject(subject).stream().map(clazzMapper::toClazzResponse).toList();
     }
 
     @Override
@@ -101,8 +100,11 @@ public class ClazzServiceImpl implements ClazzService {
         Student student = studentRepository.findById(studentID).orElseThrow(()->
                 new AppException(ErrorCode.STUDENT_NOT_EXISTED));
 
+        if(checkStudentHasClazz(student, clazz))
+            throw new AppException(ErrorCode.CLAZZ_REGISTERED);
+
         clazz.getStudents().add(student);
-        student.getClazzes().add(clazz); // Thêm clazz vào danh sách lớp học của student
+//        student.getClazzes().add(clazz); // Thêm clazz vào danh sách lớp học của student
 
         clazzRepository.save(clazz); // Lưu lại lớp học
         studentRepository.save(student); // Lưu lại student nếu cần (chưa bắt buộc)
@@ -112,5 +114,12 @@ public class ClazzServiceImpl implements ClazzService {
     public long countByStudentsInClazz(Clazz clazz) {
         System.out.println("count sv: "+ clazz.getStudents().size());
         return clazz.getStudents().size();
+    }
+
+    @Override
+    public boolean checkStudentHasClazz(Student student, Clazz clazz) {
+//        return student.getClazzes().stream()
+//                .anyMatch(clazz1 -> clazz1.getId().equals(clazz.getId()));
+        return true;
     }
 }

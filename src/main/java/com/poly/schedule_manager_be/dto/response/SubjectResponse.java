@@ -28,6 +28,6 @@ public class SubjectResponse {
     LocalDateTime updatedAt;
     String updatedBy;
     Integer requiredSubjectID;
-    Set<Specialization> specializations;
+//    Set<Specialization> specializations;
 //    List<ClazzNotStudentResponseDTO> clazzes;
 }

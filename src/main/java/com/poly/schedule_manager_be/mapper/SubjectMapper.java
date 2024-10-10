@@ -14,6 +14,6 @@ public interface SubjectMapper {
     @Mapping(target = "requiredSubjectID", source = "requiredSubject.id")
     SubjectResponse toSubjectResponse(Subject subject);
 
-    @Mapping(target = "specializations", ignore = true)
+//    @Mapping(target = "specializations", ignore = true)
     void updateSubject(@MappingTarget Subject subject, SubjectRequest request);
 }

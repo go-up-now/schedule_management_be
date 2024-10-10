@@ -5,6 +5,7 @@ import com.poly.schedule_manager_be.dto.request.UserUpdateRequestDTO;
 import com.poly.schedule_manager_be.dto.response.ApiResponse;
 import com.poly.schedule_manager_be.dto.response.SubjectResponse;
 import com.poly.schedule_manager_be.dto.response.UserResponseDTO;
+import com.poly.schedule_manager_be.entity.Subject;
 import com.poly.schedule_manager_be.service.SubjectService;
 import com.poly.schedule_manager_be.service.UserService;
 import jakarta.validation.Valid;
@@ -22,31 +23,6 @@ import java.util.List;
 public class SubjectController {
     SubjectService subjectService;
 
-//    @PostMapping
-//    ApiResponse<UserResponseDTO> create(@RequestBody @Valid UserCreateRequestDTO requestDTO){
-//        return ApiResponse.<UserResponseDTO>builder()
-//                .message("Thêm người dùng thành công")
-//                .data(userService.create(requestDTO))
-//                .build();
-//    }
-//
-//    @PutMapping("/{id}")
-//    ApiResponse<UserResponseDTO> update(@RequestBody @Valid UserUpdateRequestDTO requestDTO,
-//                                        @PathVariable Integer id){
-//        return ApiResponse.<UserResponseDTO>builder()
-//                .message("Sửa người dùng thành công")
-//                .data(userService.update(requestDTO, id))
-//                .build();
-//    }
-//
-//    @DeleteMapping("/{id}")
-//    ApiResponse<?> delete(@PathVariable Integer id){
-//        userService.delete(id);
-//        return ApiResponse.<UserResponseDTO>builder()
-//                .message("Xóa người dùng thành công")
-//                .build();
-//    }
-
     @GetMapping
     ApiResponse<List<SubjectResponse>> getAll(){
         return ApiResponse.<List<SubjectResponse>>builder()
@@ -55,20 +31,21 @@ public class SubjectController {
                 .build();
     }
 
-    @GetMapping("/{semester}/{year}")
+    @GetMapping("/{semester}/{year}/{studentId}")
     ApiResponse<List<SubjectResponse>> getAllSubjectBySemesterAndYear(
-            @PathVariable String semester, @PathVariable int year){
+            @PathVariable String semester, @PathVariable int year, @PathVariable int studentId){
         return ApiResponse.<List<SubjectResponse>>builder()
-                .message("Lấy danh sách môn học theo năm và học kỳ thành công")
-                .data(subjectService.findSubjectBySemesterAndYear(semester, year))
+                .message("Lấy danh sách môn học theo năm và học kỳ của sinh viên thành công")
+                .data(subjectService.findSubjectBySemesterAndYear(semester, year, studentId))
                 .build();
     }
 
-//    @GetMapping("/{id}")
-//    ApiResponse<UserResponseDTO> getOne(@PathVariable Integer id){
-//        return ApiResponse.<UserResponseDTO>builder()
-//                .message("Lấy người dùng thành công")
-//                .data(userService.getOne(id))
-//                .build();
-//    }
+    @GetMapping("/registered/{semester}/{year}/{studentId}")
+    ApiResponse<List<SubjectResponse>> getAllRegisteredSubjectBySemesterAndYear(
+            @PathVariable String semester, @PathVariable int year, @PathVariable int studentId){
+        return ApiResponse.<List<SubjectResponse>>builder()
+                .message("Lấy danh sách môn học đã đăng ký theo năm và học kỳ của sinh viên thành công")
+                .data(subjectService.findRegisteredSubjectBySemesterAndYear(semester, year, studentId))
+                .build();
+    }
 }

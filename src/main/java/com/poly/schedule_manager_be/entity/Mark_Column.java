@@ -30,6 +30,6 @@ public class Mark_Column {
     LocalDateTime updatedAt;
     String updatedBy;
 
-    @ManyToMany
-    Set<Study_History> studyHistories;
+//    @ManyToMany
+//    Set<Study_History> studyHistories;
 }

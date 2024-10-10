@@ -40,8 +40,8 @@ public class Subject {
 //    @JoinColumn(name = "subject_group_id")
 //    Subject_Group subject_group;
 
-    @ManyToMany
-    Set<Specialization> specializations;
+//    @ManyToMany
+//    Set<Specialization> specializations;
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     List<Clazz> clazzes;

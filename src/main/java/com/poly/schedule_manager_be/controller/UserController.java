@@ -3,6 +3,7 @@ package com.poly.schedule_manager_be.controller;
 import com.poly.schedule_manager_be.dto.request.UserCreateRequestDTO;
 import com.poly.schedule_manager_be.dto.request.UserUpdateRequestDTO;
 import com.poly.schedule_manager_be.dto.response.ApiResponse;
+import com.poly.schedule_manager_be.dto.response.StudentResponseDTO;
 import com.poly.schedule_manager_be.dto.response.UserResponseDTO;
 import com.poly.schedule_manager_be.service.UserService;
 import jakarta.validation.Valid;
@@ -58,6 +59,14 @@ public class UserController {
         return ApiResponse.<UserResponseDTO>builder()
                 .message("Lấy người dùng thành công")
                 .data(userService.getOne(id))
+                .build();
+    }
+
+    @GetMapping("/myInfor")
+    ApiResponse<UserResponseDTO> getMyInfor(){
+        return ApiResponse.<UserResponseDTO>builder()
+                .message("Lấy thông tin cá nhân của admin thành công")
+                .data(userService.getMyInfor())
                 .build();
     }
 }

@@ -29,6 +29,7 @@ public enum ErrorCode {
     UNAUTHENTICATED(507, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     STUDENT_EXIST_IN_CLAZZ(508, "Bạn đã đăng ký lớp học này rồi", HttpStatus.BAD_REQUEST),
     NOT_STUDENT(406, "Bạn không phải là sinh viên", HttpStatus.NOT_FOUND),
+    CLAZZ_REGISTERED(507, "Bạn đã đăng ký lớp học lớp này, vui lòng chọn lớp khác", HttpStatus.UNAUTHORIZED),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

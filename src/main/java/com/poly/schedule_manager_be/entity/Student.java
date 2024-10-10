@@ -25,13 +25,13 @@ public class Student {
     String semester;
     Integer year;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
-    User user;
-
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "education_program_code")
     Education_Program education_program;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    User user;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Study_History> studyHistories;
@@ -41,7 +41,4 @@ public class Student {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Student_Exam_Assignment> studentExamAssignments;
-
-    @ManyToMany(mappedBy = "students")
-    Set<Clazz> clazzes;
 }

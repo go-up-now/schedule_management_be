@@ -29,5 +29,5 @@ public class SubjectRequest {
     LocalDateTime updatedAt;
     String updatedBy;
     Subject requiredSubject;
-    Set<Specialization> specializations;
+//    Set<Specialization> specializations;
 }
