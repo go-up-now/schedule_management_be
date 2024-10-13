@@ -9,10 +9,7 @@ import com.poly.schedule_manager_be.exception.AppException;
 import com.poly.schedule_manager_be.exception.ErrorCode;
 import com.poly.schedule_manager_be.mapper.StudentMapper;
 import com.poly.schedule_manager_be.mapper.UserMapper;
-import com.poly.schedule_manager_be.repository.ClazzRepository;
-import com.poly.schedule_manager_be.repository.RoleRepository;
-import com.poly.schedule_manager_be.repository.StudentRepository;
-import com.poly.schedule_manager_be.repository.UserRepository;
+import com.poly.schedule_manager_be.repository.*;
 import com.poly.schedule_manager_be.service.StudentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -38,10 +35,14 @@ public class StudentServiceImpl implements StudentService {
     RoleRepository roleRepository;
     StudentRepository studentRepository;
     PasswordEncoder passwordEncoder;
-    private final ClazzRepository clazzRepository;
+    ClazzRepository clazzRepository;
+    AreaRepository areaRepository;
+    EducationProgramRepository educationProgramRepository;
 
     @Override
     public StudentResponseDTO create(StudentCreateRequestDTO requestDTO) {
+        if (userRepository.existsByCode(requestDTO.getUser().getCode()))
+            throw new AppException(ErrorCode.USER_CODE_EXISTED);
         if (userRepository.existsByEmail(requestDTO.getUser().getEmail()))
             throw new AppException(ErrorCode.USER_EXISTED);
 
@@ -49,12 +50,20 @@ public class StudentServiceImpl implements StudentService {
         User user = student.getUser();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
+        Area area = areaRepository.findById(requestDTO.getUser().getArea()).orElseThrow(()->
+                new AppException(ErrorCode.AREA_NOT_EXISTS));
+        Education_Program educationProgram = educationProgramRepository
+                .findById(requestDTO.getEducation_program()).orElseThrow(()->
+                new AppException(ErrorCode.EDUCATION_PROGRAM_NOT_EXISTS));
+
         HashSet<Role> roles = new HashSet<>();
         roleRepository.findById(RoleConstant.STUDENT_ROLE).ifPresent(roles::add);
 
         user.setRoles(roles);
+        user.setArea(area);
         userRepository.save(user);
 
+        student.setEducation_program(educationProgram);
         student.setUser(user);
 
         return studentMapper.toStudentResponse(studentRepository.save(student));
@@ -64,12 +73,20 @@ public class StudentServiceImpl implements StudentService {
     public StudentResponseDTO update(StudentUpdateRequestDTO requestDTO, Integer id) {
         Student student = studentRepository.findById(id).orElseThrow(() ->
                 new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+        Area area = areaRepository.findById(requestDTO.getUser().getArea()).orElseThrow(()->
+                new AppException(ErrorCode.AREA_NOT_EXISTS));
+        Education_Program educationProgram = educationProgramRepository
+                .findById(requestDTO.getEducation_program()).orElseThrow(()->
+                        new AppException(ErrorCode.EDUCATION_PROGRAM_NOT_EXISTS));
 
         User user = student.getUser();
         userMapper.updateUser(user, requestDTO.getUser());
         studentMapper.updateStudent(student, requestDTO);
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setArea(area);
+
+        student.setEducation_program(educationProgram);
 
 //        var roles = roleRepository.findAllById(request.getRoles());
 //        user.setRoles(new HashSet<>(roles));

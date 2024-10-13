@@ -33,4 +33,5 @@ public class UserResponseDTO {
     LocalDateTime updatedAt;
     String updatedBy;
     Set<Role> roles;
+    AreaResponse area;
 }

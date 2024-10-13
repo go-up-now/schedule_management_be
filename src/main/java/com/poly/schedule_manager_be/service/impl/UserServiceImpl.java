@@ -35,6 +35,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO create(UserCreateRequestDTO requestDTO) {
+        if (userRepository.existsByCode(requestDTO.getCode())) throw new AppException(ErrorCode.USER_CODE_EXISTED);
         if (userRepository.existsByEmail(requestDTO.getEmail())) throw new AppException(ErrorCode.USER_EXISTED);
 
         User user = userMapper.toUser(requestDTO);

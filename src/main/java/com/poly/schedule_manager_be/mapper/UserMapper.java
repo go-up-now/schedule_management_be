@@ -10,9 +10,13 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface UserMapper {
+    @Mapping(target = "area", ignore = true)
     User toUser(UserCreateRequestDTO request);
+
+//    @Mapping(target = "area", source = "area.id")
     UserResponseDTO toUserResponse(User user);
 
     @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "area", ignore = true)
     void updateUser(@MappingTarget User user, UserUpdateRequestDTO request);
 }

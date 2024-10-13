@@ -30,13 +30,11 @@ public class Specialization {
     @JoinColumn(name = "area_id")
     Area area;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "major_id")
-    Major major;
+    @OneToMany(mappedBy = "specialization")
+    List<Major> majors;
 
-    @OneToOne
-    @JoinColumn(name = "head", referencedColumnName = "id")
-    Instructor instructor;
+    @OneToMany(mappedBy = "specialization")
+    List<Instructor> instructors;
 
     @ManyToMany
     Set<Subject> subjects;

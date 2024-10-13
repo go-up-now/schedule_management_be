@@ -14,7 +14,7 @@ public enum ErrorCode {
     INVALID_KEY(401, "Từ khóa lỗi không hợp lệ", HttpStatus.BAD_REQUEST),
     EMAIL_INVALID(402, "Vui lòng nhập email", HttpStatus.NO_CONTENT),
     PASSWORD_INVALID(403, "Mật khẩu phải ít nhất 5 ký tự", HttpStatus.NO_CONTENT),
-    USER_EXISTED(404, "Người dùng này đã tồn tại", HttpStatus.FOUND),
+    USER_EXISTED(404, "Email này đã tồn tại", HttpStatus.FOUND),
     PASSWORD_NOT_BLANK(405, "Vui lòng nhập mật khẩu", HttpStatus.NO_CONTENT),
     STUDENT_NOT_EXISTED(406, "Sinh viên này không tồn tại", HttpStatus.NOT_FOUND),
     CODE_NOT_BLANK(407, "Vui lòng nhập mã code", HttpStatus.NO_CONTENT),
@@ -30,6 +30,9 @@ public enum ErrorCode {
     STUDENT_EXIST_IN_CLAZZ(508, "Bạn đã đăng ký lớp học này rồi", HttpStatus.BAD_REQUEST),
     NOT_STUDENT(406, "Bạn không phải là sinh viên", HttpStatus.NOT_FOUND),
     CLAZZ_REGISTERED(507, "Bạn đã đăng ký lớp học lớp này, vui lòng chọn lớp khác", HttpStatus.UNAUTHORIZED),
+    USER_CODE_EXISTED(404, "Mã người dùng này đã tồn tại", HttpStatus.NOT_FOUND),
+    AREA_NOT_EXISTS(404, "Khu vực này không tồn tại", HttpStatus.NOT_FOUND),
+    EDUCATION_PROGRAM_NOT_EXISTS(404, "Chương trình đào tạo này không tồn tại", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

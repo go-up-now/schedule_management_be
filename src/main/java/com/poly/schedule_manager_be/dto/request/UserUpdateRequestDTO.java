@@ -26,6 +26,7 @@ public class UserUpdateRequestDTO {
     String avatar;
     Boolean status;
     Set<String> roles;
+    Integer area;
     LocalDateTime updatedAt = LocalDateTime.now();
     String updatedBy;
 }

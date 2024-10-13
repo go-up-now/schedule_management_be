@@ -33,6 +33,7 @@ public class UserCreateRequestDTO {
     String address;
     String description;
     String avatar;
+    Integer area;
     Boolean status = true;
     LocalDateTime createdAt = LocalDateTime.now();
     String createdBy;

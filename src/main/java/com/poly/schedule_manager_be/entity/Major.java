@@ -31,6 +31,7 @@ public class Major {
     @OneToMany(mappedBy = "major")
     List<Education_Program> education_programs;
 
-    @OneToMany(mappedBy = "major")
-    List<Specialization> specializations;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "specialization_code")
+    Specialization specialization;
 }

@@ -1,6 +1,7 @@
 package com.poly.schedule_manager_be.dto.response;
 
 import com.poly.schedule_manager_be.dto.request.UserCreateRequestDTO;
+import com.poly.schedule_manager_be.entity.Education_Program;
 import com.poly.schedule_manager_be.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -18,6 +19,6 @@ public class StudentResponseDTO {
     LocalDate enterSchool;
     String semester;
     Integer year;
-    String education_program;
+    EducationProgramResponse education_program;
     UserResponseDTO user;
 }
