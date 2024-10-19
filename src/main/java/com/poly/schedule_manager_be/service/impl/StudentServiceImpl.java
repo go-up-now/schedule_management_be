@@ -70,6 +70,56 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public void importStudents(List<StudentCreateRequestDTO> listRequestDTO) {
+        for (StudentCreateRequestDTO st : listRequestDTO) {
+//            try {
+                // Kiểm tra sự tồn tại của mã người dùng và email
+                if (userRepository.existsByCode(st.getUser().getCode())) {
+                    throw new AppException(ErrorCode.USER_CODE_EXISTED);
+                }
+                if (userRepository.existsByEmail(st.getUser().getEmail())) {
+                    throw new AppException(ErrorCode.USER_EXISTED);
+                }
+
+                // Tạo và lưu đối tượng User
+                User user = userMapper.toUser(st.getUser()); // Tạo User từ DTO
+                user.setPassword(passwordEncoder.encode(user.getPassword())); // Mã hóa mật khẩu
+
+                // Kiểm tra Area
+                Area area = areaRepository.findById(st.getUser().getArea())
+                        .orElseThrow(() -> new AppException(ErrorCode.AREA_NOT_EXISTS));
+                user.setArea(area); // Gán area cho User
+
+                // Kiểm tra Roles
+                HashSet<Role> roles = new HashSet<>();
+                roleRepository.findById(RoleConstant.STUDENT_ROLE).ifPresent(roles::add);
+                user.setRoles(roles); // Gán roles cho User
+
+                // Lưu User và lấy lại đối tượng User đã lưu
+                user = userRepository.save(user);
+
+                // Tạo Student từ DTO
+                Student student1 = studentMapper.toStudent(st);
+                student1.setUser(user); // Gán User đã lưu cho Student
+
+                // Kiểm tra Education Program
+                Education_Program educationProgram = educationProgramRepository
+                        .findById(st.getEducation_program())
+                        .orElseThrow(() -> new AppException(ErrorCode.EDUCATION_PROGRAM_NOT_EXISTS));
+                student1.setEducation_program(educationProgram); // Gán chương trình học cho Student
+
+                // Lưu Student
+                studentRepository.save(student1);
+
+//            } catch (Exception e) {
+//                // Ghi log thông tin lỗi để giúp bạn debug
+//                System.err.println("Lỗi khi nhập sinh viên: " + e.getMessage());
+//                throw new RuntimeException("Có lỗi xảy ra trong quá trình nhập sinh viên: " + e.getMessage());
+//            }
+        }
+    }
+
+    @Override
     public StudentResponseDTO update(StudentUpdateRequestDTO requestDTO, Integer id) {
         Student student = studentRepository.findById(id).orElseThrow(() ->
                 new AppException(ErrorCode.STUDENT_NOT_EXISTED));

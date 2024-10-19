@@ -28,6 +28,14 @@ public class StudentController {
                 .build();
     }
 
+    @PostMapping("/import")
+    ApiResponse<?> importExcel(@RequestBody @Valid List<StudentCreateRequestDTO> requestDTO){
+        studentService.importStudents(requestDTO);
+        return ApiResponse.<StudentResponseDTO>builder()
+                .message("Import excel sinh viên thành công")
+                .build();
+    }
+
     @PutMapping("/{id}")
     ApiResponse<StudentResponseDTO> update(@RequestBody @Valid StudentUpdateRequestDTO requestDTO,
                                         @PathVariable Integer id){

@@ -11,6 +11,7 @@ import java.util.List;
 
 public interface StudentService {
     StudentResponseDTO create(StudentCreateRequestDTO requestDTO);
+    void importStudents(List<StudentCreateRequestDTO> listRequestDTO);
     StudentResponseDTO update(StudentUpdateRequestDTO requestDTO, Integer id);
     void delete(Integer id);
     StudentResponseDTO getOne(Integer id);
