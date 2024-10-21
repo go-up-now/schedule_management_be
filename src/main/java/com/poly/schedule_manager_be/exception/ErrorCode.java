@@ -28,11 +28,12 @@ public enum ErrorCode {
     PASSWORD_UNAUTHENTICATED(506, "Tài khoản hoặc mật khẩu không chính xác", HttpStatus.UNAUTHORIZED),
     UNAUTHENTICATED(507, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     STUDENT_EXIST_IN_CLAZZ(508, "Bạn đã đăng ký lớp học này rồi", HttpStatus.BAD_REQUEST),
-    NOT_STUDENT(406, "Bạn không phải là sinh viên", HttpStatus.NOT_FOUND),
-    CLAZZ_REGISTERED(507, "Bạn đã đăng ký lớp học lớp này, vui lòng chọn lớp khác", HttpStatus.UNAUTHORIZED),
+    NOT_STUDENT(509, "Bạn không phải là sinh viên", HttpStatus.NOT_FOUND),
+    CLAZZ_REGISTERED(600, "Bạn đã đăng ký lớp học lớp này, vui lòng chọn lớp khác", HttpStatus.UNAUTHORIZED),
     USER_CODE_EXISTED(404, "Mã người dùng này đã tồn tại", HttpStatus.NOT_FOUND),
     AREA_NOT_EXISTS(404, "Khu vực này không tồn tại", HttpStatus.NOT_FOUND),
     EDUCATION_PROGRAM_NOT_EXISTS(404, "Chương trình đào tạo này không tồn tại", HttpStatus.NOT_FOUND),
+    STUDENT_CANNOT_DELETE(404, "Sinh viên này đã đăng ký lớp học, không thể xóa", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

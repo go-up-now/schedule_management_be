@@ -10,19 +10,29 @@ import com.poly.schedule_manager_be.exception.ErrorCode;
 import com.poly.schedule_manager_be.mapper.StudentMapper;
 import com.poly.schedule_manager_be.mapper.UserMapper;
 import com.poly.schedule_manager_be.repository.*;
+import com.poly.schedule_manager_be.service.CloudinaryService;
 import com.poly.schedule_manager_be.service.StudentService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 
 @Service
 @RequiredArgsConstructor
@@ -38,6 +48,7 @@ public class StudentServiceImpl implements StudentService {
     ClazzRepository clazzRepository;
     AreaRepository areaRepository;
     EducationProgramRepository educationProgramRepository;
+    CloudinaryService cloudinaryService;
 
     @Override
     public StudentResponseDTO create(StudentCreateRequestDTO requestDTO) {
@@ -104,7 +115,7 @@ public class StudentServiceImpl implements StudentService {
 
                 // Kiểm tra Education Program
                 Education_Program educationProgram = educationProgramRepository
-                        .findById(st.getEducation_program())
+                        .findByCode(st.getEducation_program())
                         .orElseThrow(() -> new AppException(ErrorCode.EDUCATION_PROGRAM_NOT_EXISTS));
                 student1.setEducation_program(educationProgram); // Gán chương trình học cho Student
 
@@ -120,7 +131,7 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
-    public StudentResponseDTO update(StudentUpdateRequestDTO requestDTO, Integer id) {
+    public StudentResponseDTO update(StudentUpdateRequestDTO requestDTO, Integer id, MultipartFile avatar, String publicId) throws IOException{
         Student student = studentRepository.findById(id).orElseThrow(() ->
                 new AppException(ErrorCode.STUDENT_NOT_EXISTED));
         Area area = areaRepository.findById(requestDTO.getUser().getArea()).orElseThrow(()->
@@ -138,6 +149,20 @@ public class StudentServiceImpl implements StudentService {
 
         student.setEducation_program(educationProgram);
 
+        // Nếu có file hình ảnh mới, cập nhật hình ảnh trên Cloudinary và lưu URL
+        if (avatar != null && !avatar.isEmpty()) {
+            Path tempFile = Files.createTempFile(null, avatar.getOriginalFilename());
+            Files.copy(avatar.getInputStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+            String imageUrl = cloudinaryService.uploadImage(tempFile.toFile(), publicId);
+
+            // Cập nhật URL của hình ảnh trong User
+            user.setAvatar(imageUrl);
+
+            // Xóa file tạm
+            Files.delete(tempFile);
+        }
+
 //        var roles = roleRepository.findAllById(request.getRoles());
 //        user.setRoles(new HashSet<>(roles));
         userRepository.save(user);
@@ -145,8 +170,23 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    @Transactional
     public void delete(Integer id) {
-        studentRepository.deleteById(id);
+        Student student = studentRepository.findById(id).orElseThrow(()->
+                new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+        String avatarUrl = student.getUser().getAvatar();
+
+        try {
+            studentRepository.deleteById(id);
+        }catch (DataIntegrityViolationException e){
+            // Nếu có lỗi ràng buộc khóa ngoại, ném lỗi
+            throw new AppException(ErrorCode.STUDENT_CANNOT_DELETE);
+        }
+
+        // Xóa hình ảnh từ Cloudinary
+        if (avatarUrl != null && !avatarUrl.isEmpty()) {
+            cloudinaryService.deleteImage(avatarUrl);
+        }
     }
 
     @Override

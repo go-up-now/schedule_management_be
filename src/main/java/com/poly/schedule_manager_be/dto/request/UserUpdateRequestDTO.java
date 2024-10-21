@@ -1,5 +1,6 @@
 package com.poly.schedule_manager_be.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -13,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class UserUpdateRequestDTO {
     String firstName;
     String lastName;
@@ -23,7 +25,7 @@ public class UserUpdateRequestDTO {
     String phone;
     String address;
     String description;
-    String avatar;
+//    String avatar;
     Boolean status;
     Set<String> roles;
     Integer area;
