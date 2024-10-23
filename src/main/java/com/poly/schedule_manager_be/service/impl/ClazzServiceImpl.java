@@ -79,7 +79,7 @@ public class ClazzServiceImpl implements ClazzService {
 
     @Override
     public List<ClazzResponseDTO> getAll() {
-        return clazzRepository.findAll().stream().map(clazzMapper::toClazzResponse).toList();
+        return clazzRepository.findAll().stream().map(clazzMapper::toClazzNotStudentResponse).toList();
     }
 
     @Override

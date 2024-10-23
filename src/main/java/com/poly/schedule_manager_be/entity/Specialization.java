@@ -36,6 +36,6 @@ public class Specialization {
     @OneToMany(mappedBy = "specialization")
     List<Instructor> instructors;
 
-    @ManyToMany
-    Set<Subject> subjects;
+    @OneToMany(mappedBy = "specialization", cascade = CascadeType.ALL)
+    List<Subject> subjects;
 }

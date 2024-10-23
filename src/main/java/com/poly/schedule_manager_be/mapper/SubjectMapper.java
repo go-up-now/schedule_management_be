@@ -9,11 +9,11 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface SubjectMapper {
+    @Mapping(target = "requiredSubject", ignore = true)
+    @Mapping(target = "specialization", ignore = true)
     Subject toSubject(SubjectRequest request);
 
     @Mapping(target = "requiredSubjectID", source = "requiredSubject.id")
     SubjectResponse toSubjectResponse(Subject subject);
-
-//    @Mapping(target = "specializations", ignore = true)
-    void updateSubject(@MappingTarget Subject subject, SubjectRequest request);
+//    void updateSubject(@MappingTarget Subject subject, SubjectRequest request);
 }

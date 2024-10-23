@@ -1,5 +1,6 @@
 package com.poly.schedule_manager_be.dto.request;
 
+import com.poly.schedule_manager_be.dto.response.SpecializationResponse;
 import com.poly.schedule_manager_be.entity.Clazz;
 import com.poly.schedule_manager_be.entity.Specialization;
 import com.poly.schedule_manager_be.entity.Subject;
@@ -24,10 +25,11 @@ public class SubjectRequest {
     String description;
     Double cost;
     Boolean status;
-    LocalDateTime createdAt;
+    LocalDateTime createdAt = LocalDateTime.now();
     String createdBy;
     LocalDateTime updatedAt;
     String updatedBy;
-    Subject requiredSubject;
+    String requiredSubject;
+    String specialization;
 //    Set<Specialization> specializations;
 }

@@ -1,6 +1,5 @@
 package com.poly.schedule_manager_be.dto.response;
 
-import com.poly.schedule_manager_be.entity.User;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,11 +9,9 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class InstructorResponse {
+public class RoomResponse {
     Integer id;
-    String semester;
-    String experience;
-    Integer year;
-    UserResponseDTO user;
-    String specialization;
+    String room;
+    Boolean status;
+    BuildingResponse building;
 }

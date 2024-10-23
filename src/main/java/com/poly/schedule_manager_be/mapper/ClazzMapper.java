@@ -9,19 +9,24 @@ import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ClazzMapper {
+    @Mapping(target = "subject", ignore = true)
+    @Mapping(target = "instructor", ignore = true)
+    @Mapping(target = "shift", ignore = true)
+    @Mapping(target = "room", ignore = true)
     Clazz toClazz(ClazzRequestDTO request);
 
-    @Mapping(target = "instructorID", source = "instructor.id")
-    @Mapping(target = "subjectID", source = "subject.id")
-    @Mapping(target = "shiftID", source = "shift.id")
-    @Mapping(target = "room", source = "room.room")
+    @Mapping(target = "instructorCode", source = "instructor.user.code")
+    @Mapping(target = "shift", source = "shift.name")
     ClazzResponseDTO toClazzResponse(Clazz clazz);
 
-    @Mapping(target = "instructorID", source = "instructor.id")
-    @Mapping(target = "subjectID", source = "subject.id")
-    @Mapping(target = "shiftID", source = "shift.id")
-    @Mapping(target = "room", source = "room.room")
+    @Mapping(target = "instructorCode", source = "instructor.user.code")
+    @Mapping(target = "shift", source = "shift.name")
     @Mapping(target = "students", ignore = true)
     ClazzResponseDTO toClazzNotStudentResponse(Clazz clazz);
+
+    @Mapping(target = "subject", ignore = true)
+    @Mapping(target = "instructor", ignore = true)
+    @Mapping(target = "shift", ignore = true)
+    @Mapping(target = "room", ignore = true)
     void updateClazz(@MappingTarget Clazz clazz, ClazzRequestDTO request);
 }

@@ -31,6 +31,7 @@ public class Clazz {
     LocalDate startTime;
     LocalDate endTime;
     Boolean status;
+    String activityStatus;
     LocalDateTime createdAt;
     String createdBy;
     LocalDateTime updatedAt;

@@ -27,13 +27,10 @@ public class ClazzResponseDTO {
     LocalDate startTime;
     LocalDate endTime;
     Boolean status;
-    Integer subjectID;
-    Integer instructorID;
-    Integer shiftID;
-    String room;
+    SubjectResponse subject;
+    String instructorCode;
+    String shift;
+    RoomResponse room;
+    String activityStatus;
     List<Student> students;
-    LocalDateTime createdAt;
-    String createdBy;
-    LocalDateTime updatedAt;
-    String updatedBy;
 }

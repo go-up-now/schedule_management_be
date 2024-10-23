@@ -23,11 +23,8 @@ public class SubjectResponse {
     String description;
     Double cost;
     Boolean status;
-    LocalDateTime createdAt;
-    String createdBy;
-    LocalDateTime updatedAt;
-    String updatedBy;
     Integer requiredSubjectID;
+    SpecializationResponse specialization;
 //    Set<Specialization> specializations;
 //    List<ClazzNotStudentResponseDTO> clazzes;
 }

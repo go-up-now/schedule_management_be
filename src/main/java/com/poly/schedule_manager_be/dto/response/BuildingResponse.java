@@ -1,33 +1,24 @@
 package com.poly.schedule_manager_be.dto.response;
 
 import com.poly.schedule_manager_be.entity.Area;
-import com.poly.schedule_manager_be.entity.Role;
+import com.poly.schedule_manager_be.entity.Room;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.List;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class UserResponseDTO {
+public class BuildingResponse {
     Integer id;
-    String code;
-    String firstName;
-    String lastName;
-    String email;
-    Integer gender;
-    LocalDate birthday;
-    String phone;
+    String name;
     String address;
-    String description;
-    String avatar;
     Boolean status;
-    Set<Role> roles;
     AreaResponse area;
 }

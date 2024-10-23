@@ -28,8 +28,11 @@ public class ClazzRequestDTO {
     LocalDate startTime;
     LocalDate endTime;
     Boolean status = true;
-    Subject subject;
-    Instructor instructor;
-    Shift shift;
-    Room room;
+    String subjectCode;
+    String instructorCode;
+    String shift;
+    String room;
+    String activityStatus = "Chưa hoạt động";
+    LocalDateTime createdAt = LocalDateTime.now();
+    String createdBy;
 }
