@@ -12,6 +12,5 @@ import lombok.experimental.FieldDefaults;
 public class RoomResponse {
     Integer id;
     String room;
-    Boolean status;
     BuildingResponse building;
 }

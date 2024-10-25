@@ -14,5 +14,6 @@ public interface InstructorService {
     void delete(Integer id);
     InstructorResponse getOne(Integer id);
     List<InstructorResponse> getAll();
+    List<InstructorResponse> getAllByUserAreaId(Integer areaId);
     InstructorResponse getInstructorMyInfor();
 }

@@ -1,5 +1,6 @@
 package com.poly.schedule_manager_be.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.poly.schedule_manager_be.entity.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -16,6 +17,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ClazzRequestDTO {
     @NotBlank(message = "CODE_NOT_BLANK")
     String code;
@@ -28,9 +30,9 @@ public class ClazzRequestDTO {
     LocalDate startTime;
     LocalDate endTime;
     Boolean status = true;
-    String subjectCode;
+    String subject;
     String instructorCode;
-    String shift;
+    Integer shift;
     String room;
     String activityStatus = "Chưa hoạt động";
     LocalDateTime createdAt = LocalDateTime.now();

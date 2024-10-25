@@ -58,7 +58,14 @@ public class InstructorServiceImpl implements InstructorService {
 
     @Override
     public List<InstructorResponse> getAll() {
-        return List.of();
+        return instructorRepository.findAll()
+                .stream().map(instructorMapper::toInstructorResponse).toList();
+    }
+
+    @Override
+    public List<InstructorResponse> getAllByUserAreaId(Integer areaId) {
+        return instructorRepository.findAllByUserAreaId(areaId)
+                .stream().map(instructorMapper::toInstructorResponse).toList();
     }
 
     @Override

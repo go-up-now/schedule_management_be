@@ -1,13 +1,7 @@
 package com.poly.schedule_manager_be.dto.response;
 
-import com.poly.schedule_manager_be.entity.Clazz;
-import com.poly.schedule_manager_be.entity.Specialization;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Setter
 @Getter

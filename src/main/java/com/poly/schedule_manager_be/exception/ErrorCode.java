@@ -33,7 +33,8 @@ public enum ErrorCode {
     USER_CODE_EXISTED(404, "Mã người dùng này đã tồn tại", HttpStatus.NOT_FOUND),
     AREA_NOT_EXISTS(404, "Khu vực này không tồn tại", HttpStatus.NOT_FOUND),
     EDUCATION_PROGRAM_NOT_EXISTS(404, "Chương trình đào tạo này không tồn tại", HttpStatus.NOT_FOUND),
-    STUDENT_CANNOT_DELETE(404, "Sinh viên này đã đăng ký lớp học, không thể xóa", HttpStatus.NOT_FOUND),
+    STUDENT_CANNOT_DELETE(404, "Sinh viên này đã đăng ký lớp học, không thể xóa", HttpStatus.BAD_REQUEST),
+    CLAZZ_CANNOT_DELETE(404, "Lớp học này đã có sinh viên đăng ký, không thể xóa", HttpStatus.BAD_REQUEST),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

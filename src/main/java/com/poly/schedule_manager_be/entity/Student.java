@@ -41,4 +41,7 @@ public class Student {
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Student_Exam_Assignment> studentExamAssignments;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    List<Clazz> clazzes;
 }

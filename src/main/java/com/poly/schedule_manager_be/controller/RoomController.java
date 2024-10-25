@@ -9,6 +9,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,6 +27,14 @@ public class RoomController {
         return ApiResponse.<List<RoomResponse>>builder()
                 .message("Lấy danh sách phòng học thành công")
                 .data(roomService.getAll())
+                .build();
+    }
+
+    @GetMapping("/{areaId}")
+    ApiResponse<List<RoomResponse>> getAllByBuildingAreaId(@PathVariable Integer areaId){
+        return ApiResponse.<List<RoomResponse>>builder()
+                .message("Lấy danh sách phòng học theo khu vực thành công")
+                .data(roomService.getAllByBuildingAreaId(areaId))
                 .build();
     }
 }

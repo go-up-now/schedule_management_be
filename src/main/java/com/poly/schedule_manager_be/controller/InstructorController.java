@@ -7,8 +7,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/instructors")
@@ -42,14 +45,21 @@ public class InstructorController {
 //                .build();
 //    }
 //
-////    @CrossOrigin(origins = "http://localhost:3000")
-//    @GetMapping
-//    ApiResponse<List<StudentResponseDTO>> getAll(){
-//        return ApiResponse.<List<StudentResponseDTO>>builder()
-//                .message("Lấy danh sách sinh viên thành công")
-//                .data(studentService.getAll())
-//                .build();
-//    }
+    @GetMapping
+    ApiResponse<List<InstructorResponse>> getAll(){
+        return ApiResponse.<List<InstructorResponse>>builder()
+                .message("Lấy danh sách giảng viên thành công")
+                .data(instructorService.getAll())
+                .build();
+    }
+
+    @GetMapping("/{areaId}")
+    ApiResponse<List<InstructorResponse>> getAll(@PathVariable Integer areaId){
+        return ApiResponse.<List<InstructorResponse>>builder()
+                .message("Lấy danh sách giảng viên theo khu vực thành công")
+                .data(instructorService.getAllByUserAreaId(areaId))
+                .build();
+    }
 //
 //    @GetMapping("/{id}")
 //    ApiResponse<StudentResponseDTO> getOne(@PathVariable Integer id){

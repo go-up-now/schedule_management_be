@@ -30,4 +30,10 @@ public class RoomServiceImpl implements RoomService {
                 .stream().map(roomMapper::toRoomResponse).toList();
     }
 
+    @Override
+    public List<RoomResponse> getAllByBuildingAreaId(Integer areaId) {
+        return roomRepository.findAllByBuildingAreaId(areaId)
+                .stream().map(roomMapper::toRoomResponse).toList();
+    }
+
 }

@@ -1,8 +1,10 @@
 package com.poly.schedule_manager_be.controller;
 
 import com.poly.schedule_manager_be.dto.request.ClazzRequestDTO;
+import com.poly.schedule_manager_be.dto.request.StudentCreateRequestDTO;
 import com.poly.schedule_manager_be.dto.response.ApiResponse;
 import com.poly.schedule_manager_be.dto.response.ClazzResponseDTO;
+import com.poly.schedule_manager_be.dto.response.StudentResponseDTO;
 import com.poly.schedule_manager_be.service.ClazzService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
@@ -41,6 +43,14 @@ public class ClazzController {
         clazzService.delete(id);
         return ApiResponse.<ClazzResponseDTO>builder()
                 .message("Xóa lớp học thành công")
+                .build();
+    }
+
+    @PostMapping("/import")
+    ApiResponse<?> importExcel(@RequestBody @Valid List<ClazzRequestDTO> requestDTO){
+        clazzService.importClazz(requestDTO);
+        return ApiResponse.<ClazzResponseDTO>builder()
+                .message("Import excel lớp học thành công")
                 .build();
     }
 

@@ -16,11 +16,11 @@ public interface ClazzMapper {
     Clazz toClazz(ClazzRequestDTO request);
 
     @Mapping(target = "instructorCode", source = "instructor.user.code")
-    @Mapping(target = "shift", source = "shift.name")
+    @Mapping(target = "shift", source = "shift.id")
     ClazzResponseDTO toClazzResponse(Clazz clazz);
 
     @Mapping(target = "instructorCode", source = "instructor.user.code")
-    @Mapping(target = "shift", source = "shift.name")
+    @Mapping(target = "shift", source = "shift.id")
     @Mapping(target = "students", ignore = true)
     ClazzResponseDTO toClazzNotStudentResponse(Clazz clazz);
 
@@ -28,5 +28,6 @@ public interface ClazzMapper {
     @Mapping(target = "instructor", ignore = true)
     @Mapping(target = "shift", ignore = true)
     @Mapping(target = "room", ignore = true)
+    @Mapping(target = "code", ignore = true)
     void updateClazz(@MappingTarget Clazz clazz, ClazzRequestDTO request);
 }

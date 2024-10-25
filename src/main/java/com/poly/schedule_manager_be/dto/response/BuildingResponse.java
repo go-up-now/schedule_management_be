@@ -19,6 +19,5 @@ public class BuildingResponse {
     Integer id;
     String name;
     String address;
-    Boolean status;
     AreaResponse area;
 }

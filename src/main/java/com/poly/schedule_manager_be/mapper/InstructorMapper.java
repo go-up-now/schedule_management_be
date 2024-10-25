@@ -15,7 +15,7 @@ import org.mapstruct.MappingTarget;
 public interface InstructorMapper {
     @Mapping(target = "specialization", ignore = true)
     Instructor toInstructor(InstructorRequest request);
-    @Mapping(target = "specialization", source = "specialization.code")
+
     InstructorResponse toInstructorResponse(Instructor instructor);
 
     @Mapping(target = "specialization", ignore = true)

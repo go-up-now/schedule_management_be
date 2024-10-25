@@ -16,5 +16,5 @@ public class InstructorResponse {
     String experience;
     Integer year;
     UserResponseDTO user;
-    String specialization;
+    SpecializationResponse specialization;
 }

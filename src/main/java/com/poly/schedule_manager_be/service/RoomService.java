@@ -7,4 +7,5 @@ import java.util.List;
 
 public interface RoomService {
     List<RoomResponse> getAll();
+    List<RoomResponse> getAllByBuildingAreaId(Integer areaId);
 }

@@ -61,9 +61,10 @@ public class Clazz {
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
-            name = "students_clazzes", // Tên bảng liên kết
-            joinColumns = @JoinColumn(name = "clazz_id"), // Khóa ngoại trỏ đến Clazz
-            inverseJoinColumns = @JoinColumn(name = "student_id") // Khóa ngoại trỏ đến Student
+            name = "clazz_students",
+            joinColumns = @JoinColumn(name = "clazz_id"),
+            inverseJoinColumns = @JoinColumn(name = "student_id")
     )
-    List<Student> students;
+    private List<Student> students;
+
 }
