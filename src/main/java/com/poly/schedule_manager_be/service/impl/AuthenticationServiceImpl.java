@@ -24,6 +24,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.experimental.NonFinal;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -118,6 +119,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 .token(token.token)
                 .expires(token.expiredDate)
                 .build();
+    }
+
+    @Override
+    public User getInforAuthenticated() {
+        var context = SecurityContextHolder.getContext();
+        var email = context.getAuthentication().getName();
+        return userRepository.findByEmail(email).orElseThrow(()->
+                new AppException(ErrorCode.USER_NOT_EXISTED));
     }
 
     private TokenInfor generateToken(User user){

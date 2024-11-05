@@ -11,6 +11,7 @@ import com.poly.schedule_manager_be.exception.ErrorCode;
 import com.poly.schedule_manager_be.mapper.UserMapper;
 import com.poly.schedule_manager_be.repository.RoleRepository;
 import com.poly.schedule_manager_be.repository.UserRepository;
+import com.poly.schedule_manager_be.service.AuthenticationService;
 import com.poly.schedule_manager_be.service.UserService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,7 @@ public class UserServiceImpl implements UserService {
     UserMapper userMapper;
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
+    AuthenticationService authenticationService;
 
     @Override
     public UserResponseDTO create(UserCreateRequestDTO requestDTO) {
@@ -81,10 +83,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponseDTO getMyInfor() {
-        var context = SecurityContextHolder.getContext();
-        var email = context.getAuthentication().getName();
-        User user = userRepository.findByEmail(email).orElseThrow(()->
-                new AppException(ErrorCode.USER_NOT_EXISTED));
+        User user = authenticationService.getInforAuthenticated();
         return userMapper.toUserResponse(user);
     }
 }

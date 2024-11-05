@@ -11,5 +11,6 @@ import java.util.Optional;
 
 public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
     boolean existsByCode(String code);
-    List<Clazz> findAllBySubject(Subject subject);
+    List<Clazz> findAllBySemesterAndYearAndSubject(String semester,Integer year, Subject subject);
+    Optional<Clazz> findByCode(String code);
 }

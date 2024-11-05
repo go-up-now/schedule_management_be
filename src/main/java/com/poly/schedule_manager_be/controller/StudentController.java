@@ -132,13 +132,13 @@ public class StudentController {
                 .build();
     }
 
-    @PostMapping("/registerInClazz/{clazzId}")
-    ApiResponse<?> registerInClazz(@PathVariable Integer clazzId){
-        studentService.registerInClazz(clazzId);
-        return ApiResponse.<StudentResponseDTO>builder()
-                .message("Đăng ký lớp học thành công")
-                .build();
-    }
+//    @PostMapping("/registerInClazz/{clazzId}")
+//    ApiResponse<?> registerInClazz(@PathVariable Integer clazzId){
+//        studentService.registerInClazz(clazzId);
+//        return ApiResponse.<StudentResponseDTO>builder()
+//                .message("Đăng ký lớp học thành công")
+//                .build();
+//    }
 
     @DeleteMapping("/cancel/{clazzId}")
     ApiResponse<?> cancelRegisteredClazz(@PathVariable Integer clazzId){

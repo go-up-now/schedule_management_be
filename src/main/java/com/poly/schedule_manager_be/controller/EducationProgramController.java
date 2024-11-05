@@ -1,8 +1,8 @@
 package com.poly.schedule_manager_be.controller;
 
 import com.poly.schedule_manager_be.dto.response.ApiResponse;
-import com.poly.schedule_manager_be.dto.response.EducationProgramResponse;
-import com.poly.schedule_manager_be.service.impl.EducationProgramService;
+import com.poly.schedule_manager_be.dto.response.Education_ProgramResponse;
+import com.poly.schedule_manager_be.service.EducationProgramService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -20,8 +20,8 @@ public class EducationProgramController {
     EducationProgramService educationProgramService;
 
     @GetMapping
-    ApiResponse<List<EducationProgramResponse>> getAll(){
-        return ApiResponse.<List<EducationProgramResponse>>builder()
+    ApiResponse<List<Education_ProgramResponse>> getAll(){
+        return ApiResponse.<List<Education_ProgramResponse>>builder()
                 .message("Lấy danh sách chương trình đào tạo thành công")
                 .data(educationProgramService.getAll())
                 .build();

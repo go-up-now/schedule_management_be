@@ -15,8 +15,6 @@ public interface ClazzService {
     void importClazz(List<ClazzRequestDTO> listRequestDTO);
     ClazzResponseDTO getOne(Integer id);
     List<ClazzResponseDTO> getAll();
-    List<ClazzResponseDTO> getAllClazzBySubjectId(Integer subjectId);
-    void registryToClazz(Integer classID, Integer studentID);
-    long countByStudentsInClazz(Clazz clazz);
-    boolean checkStudentHasClazz(Student student, Clazz clazz);
+    List<ClazzResponseDTO> getAllClazzBySemesterAndYearAndSubject(Integer subjectId);
+    ClazzResponseDTO getInforDetailBySubject(Integer subjectId);
 }

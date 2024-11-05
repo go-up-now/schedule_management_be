@@ -59,12 +59,15 @@ public class Clazz {
     @OneToMany(mappedBy = "clazz", cascade = CascadeType.ALL)
     List<Student_Exam_Assignment> studentExamAssignments;
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "clazz_students",
-            joinColumns = @JoinColumn(name = "clazz_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
-    )
-    private List<Student> students;
+    @OneToMany(mappedBy = "clazz", cascade = CascadeType.ALL)
+    List<StudyIn> studyIns;
+
+//    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "clazz_students",
+//            joinColumns = @JoinColumn(name = "clazz_id"),
+//            inverseJoinColumns = @JoinColumn(name = "student_id")
+//    )
+//    private List<Student> students;
 
 }

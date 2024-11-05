@@ -27,6 +27,7 @@ public class Subject {
     String description;
     Double cost;
     Boolean status;
+    String subjectType;
     LocalDateTime createdAt;
     String createdBy;
     LocalDateTime updatedAt;
@@ -46,4 +47,7 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     List<Clazz> clazzes;
+
+    @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
+    List<Study_History> studyHistories;
 }

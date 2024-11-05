@@ -1,6 +1,5 @@
 package com.poly.schedule_manager_be.dto.response;
 
-import com.poly.schedule_manager_be.entity.Major;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -10,12 +9,13 @@ import java.time.LocalDateTime;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class EducationProgramResponse {
-    String code;
-    String name;
-    String semester;
-    Integer year;
+public class StudyInResponse {
+    Integer id;
     Boolean status;
-    MajorResponse major;
+    LocalDateTime createdAt;
+    String clazzCode;
+    Integer subjectId;
+    Integer studentId;
 }

@@ -2,7 +2,6 @@ package com.poly.schedule_manager_be.service;
 
 import com.poly.schedule_manager_be.dto.request.UserCreateRequestDTO;
 import com.poly.schedule_manager_be.dto.request.UserUpdateRequestDTO;
-import com.poly.schedule_manager_be.dto.response.StudentResponseDTO;
 import com.poly.schedule_manager_be.dto.response.UserResponseDTO;
 
 import java.util.List;

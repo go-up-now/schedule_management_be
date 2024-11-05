@@ -212,40 +212,40 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void registerInClazz(Integer clazzId) {
-        Clazz clazz = clazzRepository.findById(clazzId).orElseThrow(()->
-                new AppException(ErrorCode.CLAZZ_NOT_EXISTED));
-        var context = SecurityContextHolder.getContext();
-        var email = context.getAuthentication().getName();
-        User user = userRepository.findByEmail(email).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
-        Student student = studentRepository.findByUser(user).orElseThrow(()-> new AppException(ErrorCode.NOT_STUDENT));
-
-        List<Student> studentList = new ArrayList<>();
-
-        clazz.getStudents().forEach(student1 -> {
-            if(Objects.equals(student1.getId(), student.getId()))
-                throw new AppException(ErrorCode.STUDENT_EXIST_IN_CLAZZ);
-            studentList.add(student1);
-            studentList.add(student);
-        });
-
-        clazz.setStudents(studentList);
-        clazzRepository.save(clazz);
+//        Clazz clazz = clazzRepository.findById(clazzId).orElseThrow(()->
+//                new AppException(ErrorCode.CLAZZ_NOT_EXISTED));
+//        var context = SecurityContextHolder.getContext();
+//        var email = context.getAuthentication().getName();
+//        User user = userRepository.findByEmail(email).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
+//        Student student = studentRepository.findByUser(user).orElseThrow(()-> new AppException(ErrorCode.NOT_STUDENT));
+//
+//        List<Student> studentList = new ArrayList<>();
+//
+//        clazz.getStudents().forEach(student1 -> {
+//            if(Objects.equals(student1.getId(), student.getId()))
+//                throw new AppException(ErrorCode.STUDENT_EXIST_IN_CLAZZ);
+//            studentList.add(student1);
+//            studentList.add(student);
+//        });
+//
+//        clazz.setStudents(studentList);
+//        clazzRepository.save(clazz);
     }
 
     @Override
     public void cancelRegisteredClazz(int clazzId) {
-        var context = SecurityContextHolder.getContext();
-        var email = context.getAuthentication().getName();
-        User user = userRepository.findByEmail(email).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
-        Student student = studentRepository.findByUser(user).orElseThrow(()-> new AppException(ErrorCode.STUDENT_NOT_EXISTED));
-
-        Clazz clazz = clazzRepository.findById(clazzId).orElseThrow(()->
-                new AppException(ErrorCode.CLAZZ_NOT_EXISTED));
-
-//        student.getClazzes().remove(clazz);
-        clazz.getStudents().remove(student);
-
-        studentRepository.save(student);
-        clazzRepository.save(clazz);
+//        var context = SecurityContextHolder.getContext();
+//        var email = context.getAuthentication().getName();
+//        User user = userRepository.findByEmail(email).orElseThrow(()-> new AppException(ErrorCode.USER_NOT_EXISTED));
+//        Student student = studentRepository.findByUser(user).orElseThrow(()-> new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+//
+//        Clazz clazz = clazzRepository.findById(clazzId).orElseThrow(()->
+//                new AppException(ErrorCode.CLAZZ_NOT_EXISTED));
+//
+////        student.getClazzes().remove(clazz);
+//        clazz.getStudents().remove(student);
+//
+//        studentRepository.save(student);
+//        clazzRepository.save(clazz);
     }
 }

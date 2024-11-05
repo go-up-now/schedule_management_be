@@ -1,5 +1,6 @@
 package com.poly.schedule_manager_be.repository;
 
+import com.poly.schedule_manager_be.entity.Education_Program;
 import com.poly.schedule_manager_be.entity.Student;
 import com.poly.schedule_manager_be.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

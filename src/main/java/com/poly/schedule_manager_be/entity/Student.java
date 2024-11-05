@@ -29,6 +29,10 @@ public class Student {
     @JoinColumn(name = "education_program_code")
     Education_Program education_program;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "private_major_id")
+    PrivateMajor privateMajor;
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     User user;
@@ -42,6 +46,14 @@ public class Student {
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Student_Exam_Assignment> studentExamAssignments;
 
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    List<StudyIn> studyIns;
+
 //    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "clazz_students",
+//            joinColumns = @JoinColumn(name = "student_id"),
+//            inverseJoinColumns = @JoinColumn(name = "clazz_id")
+//    )
 //    List<Clazz> clazzes;
 }

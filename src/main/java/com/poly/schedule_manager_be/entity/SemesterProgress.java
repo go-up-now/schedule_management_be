@@ -4,29 +4,23 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "mark_column")
+@Table(name = "semester_progress")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Mark_Column {
+public class SemesterProgress {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Integer id;
-    String name;
-    Double percentage;
-
-    @OneToMany(mappedBy = "markColumn")
-    List<Detail_Score_Cards> detailScoreCards;
-
-    @OneToMany(mappedBy = "markColumn")
-    List<SubjectMarkColumn> subjectMarkColumns;
+    String subjectSemesterOpen;
+    Integer subjectYearOpen;
+    Boolean status;
+    LocalDateTime timeStart;
+    LocalDateTime timeEnd;
 }

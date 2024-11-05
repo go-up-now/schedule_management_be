@@ -1,6 +1,5 @@
 package com.poly.schedule_manager_be.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -10,27 +9,21 @@ import java.util.List;
 import java.util.Set;
 
 @Entity
-@Table(name = "education_program")
+@Table(name = "private_majors")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class Education_Program {
+public class PrivateMajor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    Integer id;
     String code;
     String name;
-    String semester;
-    Integer year;
     Boolean status;
     LocalDateTime createdAt;
-    String createdBy;
-    LocalDateTime updatedAt;
-    String updatedBy;
-
-    @OneToMany(mappedBy = "education_program", cascade = CascadeType.ALL)
-    List<Student> students;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "major_id")

@@ -10,12 +10,13 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/classes")
+    @RequestMapping("/api/classes")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class ClazzController {
@@ -55,9 +56,9 @@ public class ClazzController {
     }
 
     @GetMapping
-    ApiResponse<List<ClazzResponseDTO>> getAll(){
+    ApiResponse<List<ClazzResponseDTO>> getAllClazzExcludeStudent(){
         return ApiResponse.<List<ClazzResponseDTO>>builder()
-                .message("Lấy danh sách lớp học thành công")
+                .message("Lấy danh sách lớp học loại trừ sinh viên thành công")
                 .data(clazzService.getAll())
                 .build();
     }
@@ -70,19 +71,22 @@ public class ClazzController {
                 .build();
     }
 
+    // Lấy danh sách lớp học theo môn học, học kỳ và năm học nhưng loại trừ sinh viên
     @GetMapping("/subject/{subjectId}")
     ApiResponse<List<ClazzResponseDTO>> getAllClazzBySubjectId(@PathVariable Integer subjectId){
         return ApiResponse.<List<ClazzResponseDTO>>builder()
-                .message("Lấy danh sách lớp theo môn học thành công")
-                .data(clazzService.getAllClazzBySubjectId(subjectId))
+                .message("Lấy danh sách lớp theo môn học, học kỳ và năm học thành công")
+                .data(clazzService.getAllClazzBySemesterAndYearAndSubject(subjectId))
                 .build();
     }
 
-    @PostMapping("/{classID}/{studentID}")
-    ApiResponse<?> clazzRegistration(@PathVariable Integer classID, @PathVariable Integer studentID){
-        clazzService.registryToClazz(classID, studentID);
-        return ApiResponse.builder()
-                .message("Đăng ký lớp học thành công")
+    // Lấy thông tin lớp học theo môn học
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @GetMapping("/infor-detail/{subjectId}")
+    ApiResponse<ClazzResponseDTO> getInforDetailBySubject(@PathVariable Integer subjectId){
+        return ApiResponse.<ClazzResponseDTO>builder()
+                .message("Lấy thông tin lớp học theo môn học thành công")
+                .data(clazzService.getInforDetailBySubject(subjectId))
                 .build();
     }
 }

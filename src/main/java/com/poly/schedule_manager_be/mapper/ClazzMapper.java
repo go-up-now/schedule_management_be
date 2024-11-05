@@ -6,6 +6,7 @@ import com.poly.schedule_manager_be.entity.Clazz;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
+import org.mapstruct.Named;
 
 @Mapper(componentModel = "spring")
 public interface ClazzMapper {
@@ -21,7 +22,7 @@ public interface ClazzMapper {
 
     @Mapping(target = "instructorCode", source = "instructor.user.code")
     @Mapping(target = "shift", source = "shift.id")
-    @Mapping(target = "students", ignore = true)
+    @Mapping(target = "studyIns", ignore = true)
     ClazzResponseDTO toClazzNotStudentResponse(Clazz clazz);
 
     @Mapping(target = "subject", ignore = true)

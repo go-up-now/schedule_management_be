@@ -3,6 +3,7 @@ package com.poly.schedule_manager_be.exception;
 import com.poly.schedule_manager_be.dto.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -46,9 +47,22 @@ public class GlobleExceptionHandle {
     ResponseEntity<ApiResponse>  handleAppException(AppException ex){
         log.error("Error: ", ex);
         ErrorCode errorCode = ex.getErrorCode();
-        return ResponseEntity.badRequest().body(ApiResponse.builder()
+        return ResponseEntity.status(errorCode.getStatusCode())
+                .body(ApiResponse.builder()
                 .code(errorCode.getCode())
                 .message(errorCode.getMessage())
                 .build());
     }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse>  handlingAccessDeniedException(AccessDeniedException ex){
+        log.error("Error: ", ex);
+        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+        return ResponseEntity.status(errorCode.getStatusCode()).body(
+                ApiResponse.builder()
+                .code(errorCode.getCode())
+                .message(errorCode.getMessage())
+                .build());
+    }
+
 }

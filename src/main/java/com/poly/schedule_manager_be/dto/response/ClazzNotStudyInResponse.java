@@ -1,21 +1,17 @@
 package com.poly.schedule_manager_be.dto.response;
 
-import com.poly.schedule_manager_be.entity.*;
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Set;
 
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ClazzResponseDTO {
+public class ClazzNotStudyInResponse {
     Integer id;
     String code;
     String onlineLink;
@@ -32,5 +28,4 @@ public class ClazzResponseDTO {
     Integer shift;
     RoomResponse room;
     String activityStatus;
-    List<StudyInResponse> studyIns;
 }

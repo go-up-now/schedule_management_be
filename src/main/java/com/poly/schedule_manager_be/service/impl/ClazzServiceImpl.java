@@ -1,15 +1,18 @@
 package com.poly.schedule_manager_be.service.impl;
 
-import com.poly.schedule_manager_be.constant.RoleConstant;
 import com.poly.schedule_manager_be.dto.request.ClazzRequestDTO;
-import com.poly.schedule_manager_be.dto.request.StudentCreateRequestDTO;
 import com.poly.schedule_manager_be.dto.response.ClazzResponseDTO;
+import com.poly.schedule_manager_be.dto.response.SemesterProgressResponse;
+import com.poly.schedule_manager_be.dto.response.StudyInResponse;
 import com.poly.schedule_manager_be.entity.*;
 import com.poly.schedule_manager_be.exception.AppException;
 import com.poly.schedule_manager_be.exception.ErrorCode;
 import com.poly.schedule_manager_be.mapper.ClazzMapper;
 import com.poly.schedule_manager_be.repository.*;
+import com.poly.schedule_manager_be.service.AuthenticationService;
 import com.poly.schedule_manager_be.service.ClazzService;
+import com.poly.schedule_manager_be.service.SemesterProgressService;
+import com.poly.schedule_manager_be.service.StudyInService;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -18,8 +21,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +37,9 @@ public class ClazzServiceImpl implements ClazzService {
     ShiftRepository shiftRepository;
     RoomRepository roomRepository;
     StudentRepository studentRepository;
+    AuthenticationService authenticationService;
+    SemesterProgressService semesterProgressService;
+    StudyInService studyInService;
 
     @Override
     public ClazzResponseDTO create(ClazzRequestDTO requestDTO) {
@@ -157,43 +164,25 @@ public class ClazzServiceImpl implements ClazzService {
     }
 
     @Override
-    public List<ClazzResponseDTO> getAllClazzBySubjectId(Integer subjectId) {
+    public List<ClazzResponseDTO> getAllClazzBySemesterAndYearAndSubject(Integer subjectId) {
         Subject subject = subjectRepository.findById(subjectId).orElseThrow(()->
                 new AppException(ErrorCode.SUBJECT_NOT_EXISTED));
 
-        return clazzRepository.findAllBySubject(subject).stream().map(clazzMapper::toClazzResponse).toList();
+        SemesterProgressResponse semesterProgress = semesterProgressService.getOneByStatusTrue();
+
+        return clazzRepository.findAllBySemesterAndYearAndSubject(semesterProgress.getSubjectSemesterOpen(),
+                        semesterProgress.getSubjectYearOpen(), subject)
+                .stream().map(clazzMapper::toClazzResponse).toList();
     }
 
     @Override
-    public void registryToClazz(Integer classID, Integer studentID) {
-        Clazz clazz = clazzRepository.findById(classID).orElseThrow(()->
-                new AppException(ErrorCode.CLAZZ_NOT_EXISTED));
-        if(countByStudentsInClazz(clazz) >= 40)
-            throw new AppException(ErrorCode.FULL_CLAZZ);
-
-        Student student = studentRepository.findById(studentID).orElseThrow(()->
-                new AppException(ErrorCode.STUDENT_NOT_EXISTED));
-
-        if(checkStudentHasClazz(student, clazz))
-            throw new AppException(ErrorCode.CLAZZ_REGISTERED);
-
-        clazz.getStudents().add(student);
-//        student.getClazzes().add(clazz); // Thêm clazz vào danh sách lớp học của student
-
-        clazzRepository.save(clazz); // Lưu lại lớp học
-        studentRepository.save(student); // Lưu lại student nếu cần (chưa bắt buộc)
-    }
-
-    @Override
-    public long countByStudentsInClazz(Clazz clazz) {
-        System.out.println("count sv: "+ clazz.getStudents().size());
-        return clazz.getStudents().size();
-    }
-
-    @Override
-    public boolean checkStudentHasClazz(Student student, Clazz clazz) {
-//        return student.getClazzes().stream()
-//                .anyMatch(clazz1 -> clazz1.getId().equals(clazz.getId()));
-        return true;
+    public ClazzResponseDTO getInforDetailBySubject(Integer subjectId) {
+        AtomicReference<StudyInResponse> studyInResponse = new AtomicReference<>(new StudyInResponse());
+        studyInService.getAllBySemetserAndYear().forEach(studyIn -> {
+            if(Objects.equals(studyIn.getSubjectId(), subjectId))
+                studyInResponse.set(studyIn);
+        });
+        return clazzMapper.toClazzResponse(clazzRepository.findByCode(studyInResponse.get().getClazzCode())
+                .orElseThrow(() -> new AppException(ErrorCode.CLAZZ_NOT_EXISTED)));
     }
 }

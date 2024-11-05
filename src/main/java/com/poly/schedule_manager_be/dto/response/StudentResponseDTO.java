@@ -19,6 +19,6 @@ public class StudentResponseDTO {
     LocalDate enterSchool;
     String semester;
     Integer year;
-    EducationProgramResponse education_program;
+    Education_ProgramResponse education_program;
     UserResponseDTO user;
 }

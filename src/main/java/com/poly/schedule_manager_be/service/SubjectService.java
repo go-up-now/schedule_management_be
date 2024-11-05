@@ -15,7 +15,7 @@ public interface SubjectService {
     void delete(Integer id);
     SubjectResponse getOne(Integer id);
     List<SubjectResponse> getAll();
-    List<SubjectResponse> findSubjectBySemesterAndYear(String semester, int year, int studentId);
-    List<SubjectResponse> findRegisteredSubjectBySemesterAndYear(String semester, int year, int studentId);
-    boolean checkSubjectExisted(Subject subject, Student student);
+    List<SubjectResponse> findSubjectBySemesterAndYear();
+    List<SubjectResponse> findRegisteredSubjectBySemesterAndYear();
+    boolean checkSubjectAndStudentExisted(Subject subject, Student student);
 }
