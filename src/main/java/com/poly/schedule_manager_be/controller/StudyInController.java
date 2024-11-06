@@ -31,7 +31,7 @@ public class StudyInController {
                 .build();
     }
 
-    // Lấy danh sách lớp học theo đã đăng ký theo học kỳ và năm học của sinh viên
+    // Lấy danh sách lớp học đã đăng ký theo học kỳ và năm học của sinh viên
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     @GetMapping("/semester-year")
     ApiResponse<List<StudyInResponse>> getAllBySemesterAndYearAndStudent(){

@@ -29,7 +29,7 @@ public class ClazzResponseDTO {
     Boolean status;
     SubjectResponse subject;
     String instructorCode;
-    Integer shift;
+    ShiftResponse shift;
     RoomResponse room;
     String activityStatus;
     List<StudyInResponse> studyIns;

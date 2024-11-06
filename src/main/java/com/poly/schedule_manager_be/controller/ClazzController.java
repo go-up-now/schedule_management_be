@@ -89,4 +89,14 @@ public class ClazzController {
                 .data(clazzService.getInforDetailBySubject(subjectId))
                 .build();
     }
+
+    // Lấy danh sách lớp học mà sinh viên đã đăng ký từ 30 trước đến 30 ngày sau
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @GetMapping("/studyin-student")
+    ApiResponse<List<ClazzResponseDTO>> getAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc(){
+        return ApiResponse.<List<ClazzResponseDTO>>builder()
+                .message("Lấy danh sách lớp học mà sinh viên đã đăng ký từ 30 trước đến 30 ngày sau thành công")
+                .data(clazzService.findAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc())
+                .build();
+    }
 }

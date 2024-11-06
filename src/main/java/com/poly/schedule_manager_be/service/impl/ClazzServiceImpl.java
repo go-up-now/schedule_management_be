@@ -20,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -184,5 +185,18 @@ public class ClazzServiceImpl implements ClazzService {
         });
         return clazzMapper.toClazzResponse(clazzRepository.findByCode(studyInResponse.get().getClazzCode())
                 .orElseThrow(() -> new AppException(ErrorCode.CLAZZ_NOT_EXISTED)));
+    }
+
+    @Override
+    public List<ClazzResponseDTO> findAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc() {
+        User user = authenticationService.getInforAuthenticated();
+        Student student = studentRepository.findByUser(user).orElseThrow(()->
+                new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+        LocalDate startDate = LocalDate.now().minusDays(30);
+        LocalDate endDate = LocalDate.now().plusDays(30);
+
+        return clazzRepository.findAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc(
+                student, startDate, endDate, startDate, endDate
+        ).stream().map(clazzMapper::toClazzNotStudentResponse).toList();
     }
 }

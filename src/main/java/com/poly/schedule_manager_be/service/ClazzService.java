@@ -6,6 +6,7 @@ import com.poly.schedule_manager_be.dto.response.ClazzResponseDTO;
 import com.poly.schedule_manager_be.entity.Clazz;
 import com.poly.schedule_manager_be.entity.Student;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ClazzService {
@@ -17,4 +18,5 @@ public interface ClazzService {
     List<ClazzResponseDTO> getAll();
     List<ClazzResponseDTO> getAllClazzBySemesterAndYearAndSubject(Integer subjectId);
     ClazzResponseDTO getInforDetailBySubject(Integer subjectId);
+    List<ClazzResponseDTO> findAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc();
 }

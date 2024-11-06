@@ -17,11 +17,9 @@ public interface ClazzMapper {
     Clazz toClazz(ClazzRequestDTO request);
 
     @Mapping(target = "instructorCode", source = "instructor.user.code")
-    @Mapping(target = "shift", source = "shift.id")
     ClazzResponseDTO toClazzResponse(Clazz clazz);
 
     @Mapping(target = "instructorCode", source = "instructor.user.code")
-    @Mapping(target = "shift", source = "shift.id")
     @Mapping(target = "studyIns", ignore = true)
     ClazzResponseDTO toClazzNotStudentResponse(Clazz clazz);
 
