@@ -90,7 +90,7 @@ public class ClazzController {
                 .build();
     }
 
-    // Lấy danh sách lớp học mà sinh viên đã đăng ký từ 30 trước đến 30 ngày sau
+    // Lấy danh sách lớp học mà sinh viên đã đăng ký từ x trước đến x ngày sau
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     @GetMapping("/studyin-student")
     ApiResponse<List<ClazzResponseDTO>> getAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc(){
