@@ -17,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +38,13 @@ public class StudyHistoryServiceImpl implements StudyHistoryService {
 
         return studyHistoryRepository.findAllByStudent(student)
                 .stream().map(studyHistoryMapper::toStudyHistoryResponseResponse).toList();
+    }
+
+    @Override
+    public List<Map<String, Object>> getAllStudyHistoryByStudent() {
+        User user = authenticationService.getInforAuthenticated();
+        Student student = studentRepository.findByUser(user).orElseThrow(()->
+                new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+        return studyHistoryRepository.findAllStudyHistoryByStudent(student);
     }
 }

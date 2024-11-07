@@ -17,7 +17,6 @@ public interface ClazzRepository extends JpaRepository<Clazz, Integer> {
     List<Clazz> findAllBySemesterAndYearAndSubject(String semester,Integer year, Subject subject);
     Optional<Clazz> findByCode(String code);
 
-//    List<Clazz> findAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc(Student student, LocalDate startTime, LocalDate startTime2, LocalDate endTime, LocalDate endTime2);
 @Query("SELECT c FROM Clazz c " +
         "JOIN StudyIn si ON si.clazz = c " +
         "WHERE si.student = :student " +

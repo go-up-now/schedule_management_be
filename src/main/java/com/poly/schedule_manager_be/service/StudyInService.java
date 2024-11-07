@@ -6,6 +6,7 @@ import com.poly.schedule_manager_be.entity.Clazz;
 import com.poly.schedule_manager_be.entity.Student;
 
 import java.util.List;
+import java.util.Map;
 
 public interface StudyInService {
     StudyInResponse registrationClazz(StudyInRequest request);

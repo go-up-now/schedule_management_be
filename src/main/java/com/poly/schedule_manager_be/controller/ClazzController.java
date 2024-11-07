@@ -90,12 +90,12 @@ public class ClazzController {
                 .build();
     }
 
-    // Lấy danh sách lớp học mà sinh viên đã đăng ký từ x trước đến x ngày sau
+    // Lấy danh sách lớp học mà sinh viên đã đăng ký từ x ngày trước đến x ngày sau
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     @GetMapping("/studyin-student")
     ApiResponse<List<ClazzResponseDTO>> getAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc(){
         return ApiResponse.<List<ClazzResponseDTO>>builder()
-                .message("Lấy danh sách lớp học mà sinh viên đã đăng ký từ 30 trước đến 30 ngày sau thành công")
+                .message("Lấy danh sách lớp học mà sinh viên đã đăng ký từ x ngày trước đến x ngày sau thành công")
                 .data(clazzService.findAllByStudyInsStudentAndStartTimeBetweenOrEndTimeBetweenOrderByStartTimeAsc())
                 .build();
     }
