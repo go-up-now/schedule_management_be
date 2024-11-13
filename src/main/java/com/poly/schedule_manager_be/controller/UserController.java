@@ -11,6 +11,7 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -67,6 +68,16 @@ public class UserController {
         return ApiResponse.<UserResponseDTO>builder()
                 .message("Lấy thông tin cá nhân của admin thành công")
                 .data(userService.getMyInfor())
+                .build();
+    }
+
+    @PutMapping("/update-image/{id}")
+    ApiResponse<UserResponseDTO> updateImage(@RequestParam(value = "avatar", required = false) MultipartFile avatar,
+                                            @RequestParam("publicId") String publicId,
+                                            @PathVariable Integer id){
+        userService.updateImage(id, avatar, publicId);
+        return ApiResponse.<UserResponseDTO>builder()
+                .message("Cập nhật hình đại diện thành công")
                 .build();
     }
 }

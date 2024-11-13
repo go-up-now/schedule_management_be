@@ -124,7 +124,7 @@ public class ClazzServiceImpl implements ClazzService {
             }
 
             // Tạo và lưu đối tượng CLAZZ
-            Clazz clazz = clazzMapper.toClazz(clazzReq); // Tạo User từ DTO
+            Clazz clazz = clazzMapper.toClazz(clazzReq);
 
             // Kiểm tra instructor
             if(clazzReq.getInstructorCode() != null && !clazzReq.getInstructorCode().isEmpty()){

@@ -20,7 +20,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.HashSet;
 import java.util.List;
 
@@ -34,6 +39,7 @@ public class UserServiceImpl implements UserService {
     RoleRepository roleRepository;
     PasswordEncoder passwordEncoder;
     AuthenticationService authenticationService;
+    CloudinaryServiceImpl cloudinaryServiceImpl;
 
     @Override
     public UserResponseDTO create(UserCreateRequestDTO requestDTO) {
@@ -85,5 +91,30 @@ public class UserServiceImpl implements UserService {
     public UserResponseDTO getMyInfor() {
         User user = authenticationService.getInforAuthenticated();
         return userMapper.toUserResponse(user);
+    }
+
+    @Override
+    public void updateImage(Integer id, MultipartFile avatar, String publicId) {
+        User user = userRepository.findById(id).orElseThrow(()->
+                new AppException(ErrorCode.USER_NOT_EXISTED));
+
+        // Nếu có file hình ảnh mới, cập nhật hình ảnh trên Cloudinary và lưu URL
+        try {
+            if (avatar != null && !avatar.isEmpty()) {
+                Path tempFile = Files.createTempFile(null, avatar.getOriginalFilename());
+                Files.copy(avatar.getInputStream(), tempFile, StandardCopyOption.REPLACE_EXISTING);
+
+                String imageUrl = cloudinaryServiceImpl.uploadImage(tempFile.toFile(), publicId);
+
+                // Cập nhật URL của hình ảnh trong User
+                user.setAvatar(imageUrl);
+
+                // Xóa file tạm
+                Files.delete(tempFile);
+            }
+            userRepository.save(user);
+        }catch (IOException e){
+            System.out.println("Error update image: " + e.getMessage());
+        }
     }
 }
