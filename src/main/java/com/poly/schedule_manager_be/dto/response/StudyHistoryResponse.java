@@ -20,14 +20,11 @@ import java.util.Set;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class StudyHistoryResponse {
     Integer id;
-    String semester;
-    Integer year;
-    Integer block;
     Boolean status;
     Double averageScore;
     LocalDate dateSuccess;
     String activityStatus;
-    Integer studentId;
+    Integer studyInId;
     Integer subjectId;
 
 }

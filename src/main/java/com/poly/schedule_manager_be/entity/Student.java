@@ -38,9 +38,6 @@ public class Student {
     User user;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    List<Study_History> studyHistories;
-
-    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
     List<Join_Event> joinEvents;
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)

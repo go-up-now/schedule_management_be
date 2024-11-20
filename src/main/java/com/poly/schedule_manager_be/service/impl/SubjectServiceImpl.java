@@ -193,16 +193,9 @@ public class SubjectServiceImpl implements SubjectService {
 
         SemesterProgressResponse semesterProgress = semesterProgressService.getOneByStatusTrue();
 
-        List<Subject> listSubject = new ArrayList<>();
-
-        subjectRepository.findSubjectBySemesterAndYear(semesterProgress.getSubjectSemesterOpen(),
-                semesterProgress.getSubjectYearOpen()).forEach(subject -> {
-            if(checkSubjectAndStudentExisted(subject, student))
-                listSubject.add(subject);
-        });
-
-        return listSubject.stream()
-                .map(subjectMapper::toSubjectResponse).toList();
+        return subjectRepository.findRegisteredSubjectFalseOfStudentBySemesterAndYear(
+                semesterProgress.getSubjectSemesterOpen(), semesterProgress.getSubjectYearOpen(), student
+        ).stream().map(subjectMapper::toSubjectResponse).toList();
     }
 
     @Override

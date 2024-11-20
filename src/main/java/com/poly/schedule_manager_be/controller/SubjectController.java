@@ -1,6 +1,7 @@
 package com.poly.schedule_manager_be.controller;
 
 import com.poly.schedule_manager_be.dto.response.ApiResponse;
+import com.poly.schedule_manager_be.dto.response.StudyInResponse;
 import com.poly.schedule_manager_be.dto.response.SubjectResponse;
 import com.poly.schedule_manager_be.service.SubjectService;
 import lombok.AccessLevel;
@@ -38,11 +39,12 @@ public class SubjectController {
                 .build();
     }
 
+    // Lấy danh sách môn học đã đăng ký nhưng chưa thanh toán theo năm và học kỳ của sinh viên
     @PreAuthorize("hasAuthority('ROLE_STUDENT')")
     @GetMapping("/registered")
     ApiResponse<List<SubjectResponse>> getAllRegisteredSubjectBySemesterAndYear(){
         return ApiResponse.<List<SubjectResponse>>builder()
-                .message("Lấy danh sách môn học đã đăng ký theo năm và học kỳ của sinh viên thành công")
+                .message("Lấy danh sách môn học đã đăng ký nhưng chưa thanh toán theo năm và học kỳ của sinh viên thành công")
                 .data(subjectService.findRegisteredSubjectBySemesterAndYear())
                 .build();
     }

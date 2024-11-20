@@ -9,7 +9,7 @@ import org.mapstruct.Mapping;
 public interface StudyHistoryMapper {
 //    Area toArea(AreaRequest request);
 
-    @Mapping(target = "studentId", source = "student.id")
+    @Mapping(target = "studyInId", source = "studyIn.id")
     @Mapping(target = "subjectId", source = "subject.id")
     StudyHistoryResponse toStudyHistoryResponseResponse(Study_History studyHistory);
 

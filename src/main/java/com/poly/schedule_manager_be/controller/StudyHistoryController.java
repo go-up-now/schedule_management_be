@@ -23,7 +23,7 @@ public class StudyHistoryController {
     ApiResponse<?> getAllStudyHistoryByStudent(){
         return ApiResponse.builder()
                 .message("Lấy danh sách lịch sử học tập của sinh viên thành công")
-                .data(studyHistoryService.getAllStudyHistoryByStudent())
+//                .data(studyHistoryService.getAllStudyHistoryByStudent())
                 .build();
     }
 }

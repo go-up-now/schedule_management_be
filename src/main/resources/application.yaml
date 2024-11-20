@@ -14,12 +14,19 @@ server:
 
 jwt:
   signerKey: "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCHx6BjBvlTzrlsEXbAP5iFbZpW
-fS+SlFZ1NircU3r+xs+Ta/gNsDfBdTZ6jiI8wSl76CNlmm8ivUpTwS0F5n6A0mSi
-TYJ4P9ja2yGSpVjFK1uguCX+bYTYgrjnxdHVZ+LjmxWWBiJY0K5VF8qXjzMW5KTE
-MOT9jK7rQ51D4RfFZwIDAQAB"
+              fS+SlFZ1NircU3r+xs+Ta/gNsDfBdTZ6jiI8wSl76CNlmm8ivUpTwS0F5n6A0mSi
+              TYJ4P9ja2yGSpVjFK1uguCX+bYTYgrjnxdHVZ+LjmxWWBiJY0K5VF8qXjzMW5KTE
+              MOT9jK7rQ51D4RfFZwIDAQAB"
 
+# lưu hình ảnh trên cloudinary
 cloudinary:
   cloud_name: "deeekoc3r"
   api_key: "113631948261186"
-  api_secret: "etPt63Kn1_f6bg1lvqrayAYXb9Q"
+  api_secret: "etPt63Kn1_:6bg1lvqrayAYXb9Q"
+
+# Thanh toán bằng payos
+payos:
+  clientId: "b514f3b9-0ff6-4d0b-989e-1b23abb6e8dd"
+  apiKey: "415aad74-3d86-4560-9583-5c05269dcbec"
+  checksumKey: "d59f6eef175feb310c0587a51af41689e583cd8679c20e5980079d191f26dc89"
 

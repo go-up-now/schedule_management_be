@@ -29,4 +29,7 @@ public class StudyIn {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "student_id")
     Student student;
+
+    @OneToMany(mappedBy = "studyIn", cascade = CascadeType.ALL)
+    List<Study_History> studyHistories;
 }

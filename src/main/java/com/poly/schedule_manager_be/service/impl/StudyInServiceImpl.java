@@ -59,9 +59,10 @@ public class StudyInServiceImpl implements StudyInService {
     @Override
     public void delete(Integer subjectId) {
         for (StudyInResponse studyInResponse : this.getAllBySemetserAndYear()) {
-            if(studyInResponse.getSubjectId() == subjectId)
+            if(studyInResponse.getSubjectId() == subjectId){
                 studyInRepository.deleteById(studyInResponse.getId());
-            break;
+                break;
+            }
         }
     }
 
@@ -101,5 +102,22 @@ public class StudyInServiceImpl implements StudyInService {
     @Override
     public long countByStudentsInClazz(Clazz clazz) {
         return clazz.getStudyIns().size();
+    }
+
+    @Override
+    public void updateStudyInStatusTrue() {
+        User user = authenticationService.getInforAuthenticated();
+        Student student = studentRepository.findByUser(user).orElseThrow(()->
+                new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+
+        SemesterProgressResponse semesterProgress = semesterProgressService.getOneByStatusTrue();
+        List<StudyIn> studyIns = studyInRepository.findAllByClazzSemesterAndClazzYearAndStatusAndStudent(
+                semesterProgress.getSubjectSemesterOpen(), semesterProgress.getSubjectYearOpen(),false, student
+        );
+        for (StudyIn studyIn : studyIns) {
+            studyIn.setStatus(true);
+
+            studyInRepository.save(studyIn);
+        }
     }
 }
