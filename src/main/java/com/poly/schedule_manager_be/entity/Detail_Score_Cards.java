@@ -23,6 +23,6 @@ public class Detail_Score_Cards {
     Study_History studyHistory;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "subject_id")
+    @JoinColumn(name = "mark_column_id")
     Mark_Column markColumn;
 }

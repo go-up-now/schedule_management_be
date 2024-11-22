@@ -40,11 +40,11 @@ public class StudyHistoryServiceImpl implements StudyHistoryService {
                 .stream().map(studyHistoryMapper::toStudyHistoryResponseResponse).toList();
     }
 
-//    @Override
-//    public List<Map<String, Object>> getAllStudyHistoryByStudent() {
-//        User user = authenticationService.getInforAuthenticated();
-//        Student student = studentRepository.findByUser(user).orElseThrow(()->
-//                new AppException(ErrorCode.STUDENT_NOT_EXISTED));
-//        return studyHistoryRepository.findAllStudyHistoryByStudent(student);
-//    }
+    @Override
+    public List<Map<String, Object>> getAllStudyHistoryByStudent() {
+        User user = authenticationService.getInforAuthenticated();
+        Student student = studentRepository.findByUser(user).orElseThrow(()->
+                new AppException(ErrorCode.STUDENT_NOT_EXISTED));
+        return studyHistoryRepository.findAllStudyHistoryByStudent(student);
+    }
 }

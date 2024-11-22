@@ -13,6 +13,8 @@ public interface StudentMapper {
     @Mapping(target = "education_program", ignore = true)
     @Mapping(target = "user.area", ignore = true)
     Student toStudent(StudentCreateRequestDTO request);
+
+    @Mapping(target = "privateMajorName", source = "privateMajor.name")
     StudentResponseDTO toStudentResponse(Student student);
 
     @Mapping(target = "user.roles", ignore = true)

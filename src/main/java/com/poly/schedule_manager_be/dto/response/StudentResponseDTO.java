@@ -21,4 +21,5 @@ public class StudentResponseDTO {
     Integer year;
     Education_ProgramResponse education_program;
     UserResponseDTO user;
+    String privateMajorName;
 }

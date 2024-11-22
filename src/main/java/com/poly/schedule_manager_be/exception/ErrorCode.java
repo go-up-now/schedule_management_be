@@ -39,6 +39,7 @@ public enum ErrorCode {
     SEMESTER_PROGRESS_NOT_OPEN(404, "Tiến trình chưa mở", HttpStatus.NOT_FOUND),
     PRIVATE_MAJOR_NOT_EXISTED(409, "Chuyên ngành hẹp này không tồn tại", HttpStatus.NOT_FOUND),
     STUDYIN_NOT_EXISTED(404, "Lớp học của môn học này không tồn tại", HttpStatus.NOT_FOUND),
+    STUDY_HISTORY_NOT_EXISTED(404, "Lịch sử học tập này không tồn tại", HttpStatus.NOT_FOUND),
     ;
 
     ErrorCode(int code, String message, HttpStatusCode statusCode) {

@@ -7,5 +7,5 @@ import java.util.Map;
 
 public interface StudyHistoryService {
     List<StudyHistoryResponse> getAllByStudent();
-//    List<Map<String, Object>> getAllStudyHistoryByStudent();
+    List<Map<String, Object>> getAllStudyHistoryByStudent();
 }
