@@ -30,5 +30,10 @@ public class PrivateMajor {
     Major major;
 
     @ManyToMany
+    @JoinTable(
+            name = "private_majors_subjects", // Tên bảng liên kết
+            joinColumns = @JoinColumn(name = "private_major_id"),
+            inverseJoinColumns = @JoinColumn(name = "subjects_id")
+    )
     Set<Subject> subjects;
 }

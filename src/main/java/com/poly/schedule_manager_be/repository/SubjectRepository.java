@@ -21,4 +21,10 @@ public interface SubjectRepository extends JpaRepository<Subject, Integer> {
     List<Subject> findRegisteredSubjectFalseOfStudentBySemesterAndYear(@Param("semester") String semester,
                                                              @Param("year") int year,
                                                              @Param("student") Student student);
+    @Query("SELECT DISTINCT  s " +
+            "FROM Subject s " +
+            "LEFT JOIN s.privateMajors pm " +
+            "LEFT JOIN s.educationPrograms ep " +
+            "WHERE pm.name = :privateMajorName")
+    List<Subject> findSubjectsInPrivateMajorsAndEducationPrograms(@Param("privateMajorName") String privateMajorName);
 }

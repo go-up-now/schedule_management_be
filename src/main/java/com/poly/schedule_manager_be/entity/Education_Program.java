@@ -37,5 +37,10 @@ public class Education_Program {
     Major major;
 
     @ManyToMany
+    @JoinTable(
+            name = "education_program_subjects", // Tên bảng liên kết
+            joinColumns = @JoinColumn(name = "education_program_code"),
+            inverseJoinColumns = @JoinColumn(name = "subjects_id")
+    )
     Set<Subject> subjects;
 }

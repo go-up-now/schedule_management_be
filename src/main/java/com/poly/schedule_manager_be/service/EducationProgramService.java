@@ -4,6 +4,7 @@ import com.poly.schedule_manager_be.dto.request.Education_ProgramRequest;
 import com.poly.schedule_manager_be.dto.response.Education_ProgramResponse;
 
 import java.util.List;
+import java.util.Map;
 
 public interface EducationProgramService {
     Education_ProgramResponse create(Education_ProgramRequest request);

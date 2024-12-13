@@ -22,7 +22,7 @@ jwt:
 cloudinary:
   cloud_name: "deeekoc3r"
   api_key: "113631948261186"
-  api_secret: "etPt63Kn1_:6bg1lvqrayAYXb9Q"
+  api_secret: "etPt63Kn1_f6bg1lvqrayAYXb9Q"
 
 # Thanh toán bằng payos
 payos:

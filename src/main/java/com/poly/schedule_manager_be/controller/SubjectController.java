@@ -48,4 +48,13 @@ public class SubjectController {
                 .data(subjectService.findRegisteredSubjectBySemesterAndYear())
                 .build();
     }
+
+    @PreAuthorize("hasAuthority('ROLE_STUDENT')")
+    @GetMapping("/education-programs/{privateMajorName}")
+    ApiResponse<?> findAllSubjectsByEducationProgramAndStudyHistory(@PathVariable String privateMajorName){
+        return ApiResponse.builder()
+                .message("Lấy danh sách môn học của chương trình đào tạo và lịch sử học thành công")
+                .data(subjectService.findAllSubjectsByEducationProgramAndStudyHistory(privateMajorName))
+                .build();
+    }
 }

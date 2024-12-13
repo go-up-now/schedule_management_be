@@ -50,4 +50,10 @@ public class Subject {
 
     @OneToMany(mappedBy = "subject", cascade = CascadeType.ALL)
     List<Study_History> studyHistories;
+
+    @ManyToMany(mappedBy = "subjects")
+    Set<PrivateMajor> privateMajors;
+
+    @ManyToMany(mappedBy = "subjects")
+    Set<Education_Program> educationPrograms;
 }

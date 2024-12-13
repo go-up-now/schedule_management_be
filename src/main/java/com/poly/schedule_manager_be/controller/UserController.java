@@ -72,7 +72,7 @@ public class UserController {
                 .build();
     }
 
-    @PreAuthorize("hasAuthority('ROLE_STUDENT, ROLE_ADMIN, ROLE_INSTRUCTOR')")
+    @PreAuthorize("hasAnyAuthority('ROLE_STUDENT', 'ROLE_ADMIN', 'ROLE_INSTRUCTOR')")
     @PutMapping("/update-image/{id}")
     ApiResponse<UserResponseDTO> updateImage(@RequestParam(value = "avatar", required = false) MultipartFile avatar,
                                             @RequestParam("publicId") String publicId,

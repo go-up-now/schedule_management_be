@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public interface SubjectService {
     SubjectResponse create(SubjectRequest request);
@@ -18,4 +20,5 @@ public interface SubjectService {
     List<SubjectResponse> findSubjectBySemesterAndYear();
     List<SubjectResponse> findRegisteredSubjectBySemesterAndYear();
     boolean checkSubjectAndStudentExisted(Subject subject, Student student);
+    Set<Map<String, Object>> findAllSubjectsByEducationProgramAndStudyHistory(String privateMajorName);
 }

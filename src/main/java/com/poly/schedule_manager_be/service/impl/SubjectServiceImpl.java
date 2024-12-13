@@ -4,17 +4,11 @@ import com.poly.schedule_manager_be.dto.request.SubjectRequest;
 import com.poly.schedule_manager_be.dto.response.SemesterProgressResponse;
 import com.poly.schedule_manager_be.dto.response.StudyHistoryResponse;
 import com.poly.schedule_manager_be.dto.response.SubjectResponse;
-import com.poly.schedule_manager_be.entity.PrivateMajor;
-import com.poly.schedule_manager_be.entity.Student;
-import com.poly.schedule_manager_be.entity.Subject;
-import com.poly.schedule_manager_be.entity.User;
+import com.poly.schedule_manager_be.entity.*;
 import com.poly.schedule_manager_be.exception.AppException;
 import com.poly.schedule_manager_be.exception.ErrorCode;
 import com.poly.schedule_manager_be.mapper.SubjectMapper;
-import com.poly.schedule_manager_be.repository.ClazzRepository;
-import com.poly.schedule_manager_be.repository.PrivateMajorRepository;
-import com.poly.schedule_manager_be.repository.StudentRepository;
-import com.poly.schedule_manager_be.repository.SubjectRepository;
+import com.poly.schedule_manager_be.repository.*;
 import com.poly.schedule_manager_be.service.AuthenticationService;
 import com.poly.schedule_manager_be.service.SemesterProgressService;
 import com.poly.schedule_manager_be.service.StudyHistoryService;
@@ -40,6 +34,7 @@ public class SubjectServiceImpl implements SubjectService {
     SemesterProgressService semesterProgressService;
     StudyHistoryService studyHistoryService;
     PrivateMajorRepository privateMajorRepository;
+    private final StudyHistoryRepository studyHistoryRepository;
 
     @Override
     public SubjectResponse create(SubjectRequest request) {
@@ -202,5 +197,50 @@ public class SubjectServiceImpl implements SubjectService {
     public boolean checkSubjectAndStudentExisted(Subject subject, Student student){
         return student.getStudyIns().stream()
                 .anyMatch(studyIn -> studyIn.getClazz().getSubject().getId().equals(subject.getId()));
+    }
+
+    @Override
+    public Set<Map<String, Object>> findAllSubjectsByEducationProgramAndStudyHistory(String privateMajorName) {
+        Set<Map<String, Object>> set = new HashSet<>();
+        List<Map<String, Object>> study_histories = studyHistoryService.getAllStudyHistoryByStudent();
+        List<Subject> subjectList = subjectRepository.findSubjectsInPrivateMajorsAndEducationPrograms(privateMajorName);
+
+        // Dùng Map tạm thời để lưu các subject theo subjectCode
+        Map<String, Map<String, Object>> tempMap = new HashMap<>();
+
+        // Thêm các subject từ subjectList vào tempMap
+        for (Subject subject : subjectList) {
+            Map<String, Object> subjectMap = new HashMap<>();
+            subjectMap.put("subjectCode", subject.getCode());
+            subjectMap.put("name", subject.getName());
+            subjectMap.put("credits", subject.getCredits());
+            subjectMap.put("semester", "");
+            subjectMap.put("year", "");
+            subjectMap.put("averageScore", 0.0);
+            subjectMap.put("activityStatus", "Chưa học");
+
+            tempMap.put(subject.getCode(), subjectMap); // Lưu theo subjectCode
+        }
+
+        // Thêm các subject từ study_histories vào tempMap (ghi đè nếu đã tồn tại)
+        for (Map<String, Object> study_history : study_histories) {
+            String subjectCode = (String) study_history.get("subjectCode");
+
+            Map<String, Object> subjectMap = new HashMap<>();
+            subjectMap.put("subjectCode", subjectCode);
+            subjectMap.put("name", study_history.get("name"));
+            subjectMap.put("credits", study_history.get("credits"));
+            subjectMap.put("semester", study_history.get("semester"));
+            subjectMap.put("year", study_history.get("year"));
+            subjectMap.put("averageScore", study_history.get("averageScore"));
+            subjectMap.put("activityStatus", study_history.get("activityStatus"));
+
+            tempMap.put(subjectCode, subjectMap); // Ghi đè nếu subjectCode đã tồn tại
+        }
+
+        // Chuyển các giá trị từ tempMap sang set
+        set.addAll(tempMap.values());
+
+        return set;
     }
 }
